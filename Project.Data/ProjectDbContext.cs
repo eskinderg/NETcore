@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Project.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Project.Data
 {
@@ -39,6 +41,18 @@ namespace Project.Data
                 var mapper = Activator.CreateInstance(mappingType);
                 mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
             }
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            // get the configuration from the app settings
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            // define the database to use
+            // optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
         }
 
         public int ExecuteSqlCommand(string sql, bool doNotEnsureTransaction = false, int? timeout = null, params object[] parameters)

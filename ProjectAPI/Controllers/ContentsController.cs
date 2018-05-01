@@ -27,7 +27,6 @@ namespace ProjectAPI.Controllers
         {
             _mapper = mapper;
             _contentService = contentService;
-           
         }
 
         // GET api/contents
@@ -49,7 +48,7 @@ namespace ProjectAPI.Controllers
         [HttpPost]
         public ContentViewModel Post([FromBody]Content content)
         {
-            if (content == null) 
+            if (content == null)
                 return null;
             _contentService.AddContent(content);
             return _mapper.Map<ContentViewModel>(content);
