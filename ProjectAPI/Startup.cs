@@ -11,6 +11,8 @@ using Microsoft.Extensions.Options;
 using Project.Data;
 using Project.Services;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql;
+using AutoMapper;
 
 namespace ProjectAPI
 {
@@ -26,15 +28,25 @@ namespace ProjectAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAutoMapper();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddSingleton<IDbContext, ProjectDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
             services.AddSingleton<IContentService, ContentService>();
             services.AddSingleton<IFolderService, FolderService>();
 
             services.AddDbContext<ProjectDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+                    options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),b => b.MigrationsAssembly("ProjectAPI")));
             services.AddMvc();
         }
 

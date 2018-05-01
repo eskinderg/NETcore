@@ -16,8 +16,8 @@ namespace Project.Services
 
         public IEnumerable<Folder> GetAllFolders()
         {
-            return new List<Folder> { new Folder{ Name="Myname", Id = 2}};
-            // return _folderRepository.Table.ToList();
+            // return new List<Folder> { new Folder{ Name="Myname", Id = 2}};
+            return _folderRepository.Table.ToList();
         }
 
         public Folder GetFolder(string name)
