@@ -25,6 +25,15 @@ namespace ProjectAPI
 
             services.AddAutoMapper();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddDbContext<ProjectDbContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ProjectAPI")));
 
@@ -39,13 +48,6 @@ namespace ProjectAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors(c =>
-            {
-                c.AllowAnyHeader();
-                c.AllowAnyMethod();
-                c.AllowAnyOrigin();
-            });
 
             app.UseMvc();
         }
