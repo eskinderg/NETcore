@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using Project.Model;
-using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace Project.Data
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        
-        private readonly IDbContext _context;
+        private readonly ProjectDbContext _context;
         private DbSet<T> _entities;
 
-        public Repository(IDbContext context)
+        public Repository(ProjectDbContext context)
         {
             _context = context;
         }
@@ -24,120 +23,59 @@ namespace Project.Data
 
         public void Insert(T entity)
         {
-            //try
-            //{
-                if (entity == null)
-                    throw new ArgumentNullException("entity");
+            if (entity == null)
+                throw new ArgumentNullException("entity");
 
-                Entities.Add(entity);
-
-                _context.SaveChanges();
-            //}
-            //catch (DbEntityValidationException dbException)
-            //{
-            //    throw new Exception(GetFullErrorText(dbException), dbException);
-            //}
+            Entities.Add(entity);
         }
 
         public void Insert(IEnumerable<T> entities)
         {
-            //try
-            //{
-                if (entities == null)
-                    throw new ArgumentNullException("entities");
+            if (entities == null)
+                throw new ArgumentNullException("entities");
 
-                foreach (var entity in entities)
-                    Entities.Add(entity);
+            foreach (var entity in entities)
+                Entities.Add(entity);
 
-                _context.SaveChanges();
-            //}
-            //catch (DbEntityValidationException dbException)
-            //{
-            //    throw new Exception(GetFullErrorText(dbException), dbException);
-            //}
         }
-
 
         public void Update(T entity)
         {
-            //try
-            //{
-                if (entity == null)
-                    throw new ArgumentNullException("entity");
-
-                _context.SaveChanges();
-            //}
-            //catch (DbEntityValidationException dbException)
-            //{
-            //    throw new Exception(GetFullErrorText(dbException), dbException);
-            //}
+            if (entity == null)
+                throw new ArgumentNullException("entity");
         }
 
         public void Update(IEnumerable<T> entities)
         {
-            //try
-            //{
-                if (entities == null)
-                    throw new ArgumentNullException("entities");
-
-                _context.SaveChanges();
-            //}
-            //catch (DbEntityValidationException dbException)
-            //{
-            //    throw new Exception(GetFullErrorText(dbException), dbException);
-            //}
+            if (entities == null)
+                throw new ArgumentNullException("entities");
         }
-
 
         public void Delete(T entity)
         {
-            //try
-            //{
-                if (entity == null)
-                    throw new ArgumentNullException("entity");
+            if (entity == null)
+                throw new ArgumentNullException("entity");
 
-                Entities.Remove(entity);
-
-                _context.SaveChanges();
-            //}
-            //catch (DbEntityValidationException dbException)
-            //{
-            //    throw new Exception(GetFullErrorText(dbException), dbException);
-            //}
+            Entities.Remove(entity);
         }
 
         public void Delete(IEnumerable<T> entities)
         {
-            //try
-            //{
-                if (entities == null)
-                    throw new ArgumentNullException("entities");
+            if (entities == null)
+                throw new ArgumentNullException("entities");
 
-                foreach (var entity in entities)
-                    Entities.Remove(entity);
-
-                _context.SaveChanges();
-            //}
-            //catch (DbEntityValidationException dbException)
-            //{
-            //    throw new Exception(GetFullErrorText(dbException), dbException);
-            //}
+            foreach (var entity in entities)
+                Entities.Remove(entity);
         }
 
         public IQueryable<T> Table
         {
-            get
-            {
-                return Entities;
-            }
+            get { return Entities; }
         }
 
         public IQueryable<T> TableNoTracking
         {
-            get
-            {
-                return Entities.AsNoTracking();
-            }
+            get { return Entities.AsNoTracking(); }
         }
 
         private DbSet<T> Entities
@@ -145,16 +83,6 @@ namespace Project.Data
             get { return _entities ?? (_entities = _context.Set<T>()); }
         }
 
-        //private string GetFullErrorText(DbEntityValidationException exc)
-        //{
-        //    var msg = string.Empty;
-        //    foreach (var validationErrors in exc.EntityValidationErrors)
-        //        foreach (var error in validationErrors.ValidationErrors)
-        //            msg += string.Format("Property: {0} Error: {1}", error.PropertyName, error.ErrorMessage) + Environment.NewLine;
-        //    return msg;
-        //}
-
-        
     }
 
 }

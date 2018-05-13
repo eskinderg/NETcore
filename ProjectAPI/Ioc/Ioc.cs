@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Project.Data;
 using Project.Services;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectAPI.Identity.Authorization;
+using Project.Infra;
 
 namespace ProjectAPI.Ioc
 {
@@ -18,11 +20,14 @@ namespace ProjectAPI.Ioc
             // services.AddScoped<IMediatorHandler, InMemoryBus>();
 
             // ASP.NET Authorization Polices
-            // services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); ;
+            services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); ;
 
             // Application
             services.AddSingleton(Mapper.Configuration);
-            services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
+
+            services.AddScoped<IMapper>(
+                sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService)
+            );
             // services.AddScoped<ICustomerAppService, CustomerAppService>();
 
             // Domain - Events
@@ -37,14 +42,12 @@ namespace ProjectAPI.Ioc
             // services.AddScoped<INotificationHandler<RemoveCustomerCommand>, CustomerCommandHandler>();
 
             // Infra - Data
-            // services.AddScoped<ICustomerRepository, CustomerRepository>();
-            services.AddSingleton(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IDbContext, ProjectDbContext>();
+            services.AddScoped<ProjectDbContext>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IFolderService, FolderService>();
-
-            // services.AddScoped<IUnitOfWork, UnitOfWork>();
-            // services.AddScoped<EquinoxContext>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Infra - Data EventSourcing
             // services.AddScoped<IEventStoreRepository, EventStoreSQLRepository>();

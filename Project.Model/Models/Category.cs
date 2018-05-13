@@ -10,6 +10,5 @@ namespace Project.Model.Models
 
         public SubCategory SubCategory { get; set; }
 
-
     }
 }

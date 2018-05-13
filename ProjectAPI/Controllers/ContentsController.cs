@@ -3,45 +3,41 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Project.Services;
 using Project.Model.Models;
-using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net;
-using System;
-using System.Text;
 using AutoMapper;
 using Project.Model.ViewModels;
+using Project.Infra;
 
 namespace ProjectAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
     [EnableCors("CorsPolicy")]
-    //[Authorize]
+    [Authorize]
+    [ApiVersion("1.0")]
     public class ContentsController : Controller
     {
-        private readonly IContentService _contentService;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ContentsController(IContentService contentService,IMapper mapper)
+        public ContentsController(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _mapper = mapper;
-            _contentService = contentService;
+            _unitOfWork = unitOfWork;
         }
 
         // GET api/contents
         [HttpGet]
-        // [Authorize]
+        [Authorize(Policy="CanWriteCustomerData")]
         public JsonResult Get()
         {
-            return Json(_contentService.GetAllContents());
+            return Json(_unitOfWork.Contents.GetAllContents());
         }
 
         // GET api/Content/5
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
-            return Json(_contentService.GetContent(id));
+            return Json(_unitOfWork.Contents.GetContent(id));
         }
 
         // POST api/contents
@@ -50,7 +46,10 @@ namespace ProjectAPI.Controllers
         {
             if (content == null)
                 return null;
-            _contentService.AddContent(content);
+
+            _unitOfWork.Contents.AddContent(content);
+            _unitOfWork.Save();
+
             return _mapper.Map<ContentViewModel>(content);
         }
 

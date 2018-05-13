@@ -4,9 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Project.Data;
 using ProjectAPI.Ioc;
-using Project.Services;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using ProjectAPI.Identity.Authorization;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ProjectAPI
 {
@@ -19,9 +22,18 @@ namespace ProjectAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<ProjectDbContext>(options =>
+                    options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ProjectAPI")));
+
+           services.AddApiVersioning(options =>
+           {
+               options.ApiVersionReader = new HeaderApiVersionReader("api-version");
+               options.AssumeDefaultVersionWhenUnspecified = true;
+               options.DefaultApiVersion = new ApiVersion(1, 0);
+           });
 
             services.AddAutoMapper();
 
@@ -34,8 +46,33 @@ namespace ProjectAPI
                     .AllowCredentials());
             });
 
-            services.AddDbContext<ProjectDbContext>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ProjectAPI")));
+            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            // .AddJwtBearer(options =>
+            // {
+            //     options.Authority = "http://localhost:2000";
+            //     options.RequireHttpsMetadata = false;
+            //     options.Audience = "postman-api";
+            //     options.AllowedScopes = { "postman_api" },
+
+            // });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Alice Smith")));
+                options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Bob Smith")));
+                options.AddPolicy("CanRemoveCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("Customers", "Remove")));
+            });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+                {
+                    o.Authority = "http://localhost:2000";
+                    o.Audience = "postman_api";
+                    o.RequireHttpsMetadata = false;
+                });
 
             RegisterServices(services);
 
@@ -48,6 +85,8 @@ namespace ProjectAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }
