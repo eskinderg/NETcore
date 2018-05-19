@@ -10,7 +10,7 @@ using System;
 
 namespace ProjectAPI.Migrations
 {
-    [DbContext(typeof(ProjectDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20180430181315_InitialCreate")]
     partial class InitialCreate
     {

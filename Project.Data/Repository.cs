@@ -8,18 +8,12 @@ namespace Project.Data
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly ProjectDbContext _context;
+        public AppDbContext Context { get; }
         private DbSet<T> _entities;
 
-        public Repository(ProjectDbContext context)
-        {
-            _context = context;
-        }
+        public Repository(AppDbContext context) => Context = context;
 
-        public T GetById(object id)
-        {
-            return Entities.Find(id);
-        }
+        public T GetById(object id) => Entities.Find(id);
 
         public void Insert(T entity)
         {
@@ -80,7 +74,7 @@ namespace Project.Data
 
         private DbSet<T> Entities
         {
-            get { return _entities ?? (_entities = _context.Set<T>()); }
+            get { return _entities ?? (_entities = Context.Set<T>()); }
         }
 
     }

@@ -19,21 +19,24 @@ namespace ProjectAPI
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var config = Configuration.GetSection("ApplicationSettings").Get<AppSettings>();
 
-            services.AddDbContext<ProjectDbContext>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ProjectAPI")));
+            //Adding appSettings.json and binding it to AppSettings POCO class
+            //Later on you can use IOptions<AppSettings> appSettings to inject it using using Microsoft.Extensions.Options;
+            services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
-           services.AddApiVersioning(options =>
-           {
-               options.ApiVersionReader = new HeaderApiVersionReader("api-version");
-               options.AssumeDefaultVersionWhenUnspecified = true;
-               options.DefaultApiVersion = new ApiVersion(1, 0);
-           });
+            services.AddDbContext<AppDbContext>(options => options.UseMySql(config.DbConnectionString, b => b.MigrationsAssembly("ProjectAPI")));
+
+            services.AddApiVersioning(options =>
+            {
+                options.ApiVersionReader = new HeaderApiVersionReader(config.Api.VersionReader);
+                options.AssumeDefaultVersionWhenUnspecified = config.Api.AssumeDefaultVersionWhenUnspecified;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+            });
 
             services.AddAutoMapper();
 
@@ -45,16 +48,6 @@ namespace ProjectAPI
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-
-            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            // .AddJwtBearer(options =>
-            // {
-            //     options.Authority = "http://localhost:2000";
-            //     options.RequireHttpsMetadata = false;
-            //     options.Audience = "postman-api";
-            //     options.AllowedScopes = { "postman_api" },
-
-            // });
 
             services.AddAuthorization(options =>
             {
@@ -69,14 +62,17 @@ namespace ProjectAPI
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
                 {
-                    o.Authority = "http://localhost:2000";
-                    o.Audience = "postman_api";
-                    o.RequireHttpsMetadata = false;
+                    o.Authority = config.IdentityServer.Authority;
+                    o.Audience = config.IdentityServer.Audience;
+                    o.RequireHttpsMetadata = config.IdentityServer.RequireHttpsMetadata;
                 });
 
             RegisterServices(services);
 
-            services.AddMvc();
+            services.AddMvc(options =>
+           {
+               options.Filters.Add(typeof(ValidateModelStateAttribute));
+           });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -96,4 +92,3 @@ namespace ProjectAPI
         }
     }
 }
-

@@ -6,6 +6,8 @@ using Project.Model.Models;
 using AutoMapper;
 using Project.Model.ViewModels;
 using Project.Infra;
+using System.Security.Claims;
+using Microsoft.Extensions.Options;
 
 namespace ProjectAPI.Controllers
 {
@@ -16,13 +18,17 @@ namespace ProjectAPI.Controllers
     [ApiVersion("1.0")]
     public class ContentsController : Controller
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
+        public IMapper Mapper { get;}
+        public IUnitOfWork UnitOfWork { get; }
 
-        public ContentsController(IUnitOfWork unitOfWork,IMapper mapper)
+        public AppSettings AppSettings { get; set; }
+
+        public ContentsController(IUnitOfWork unitOfWork,IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
+            Mapper = mapper;
+            UnitOfWork = unitOfWork;
+            AppSettings = appSettings.Value;
+
         }
 
         // GET api/contents
@@ -30,27 +36,26 @@ namespace ProjectAPI.Controllers
         [Authorize(Policy="CanWriteCustomerData")]
         public JsonResult Get()
         {
-            return Json(_unitOfWork.Contents.GetAllContents());
+            // return Json ( HttpContext.User.Identity.IsAuthenticated);
+            // return Json(((ClaimsIdentity)HttpContext.User.Identity).FindFirst(ClaimTypes.Name));
+            return Json(UnitOfWork.Contents.AllContents);
         }
 
         // GET api/Content/5
         [HttpGet("{id}")]
-        public JsonResult Get(int id)
-        {
-            return Json(_unitOfWork.Contents.GetContent(id));
-        }
+        public JsonResult Get(int id) => Json(UnitOfWork.Contents.GetContent(id));
 
         // POST api/contents
         [HttpPost]
-        public ContentViewModel Post([FromBody]Content content)
+        public string Post([FromBody]ContentViewModel model)
         {
-            if (content == null)
-                return null;
-
-            _unitOfWork.Contents.AddContent(content);
-            _unitOfWork.Save();
-
-            return _mapper.Map<ContentViewModel>(content);
+            if(ModelState.IsValid)
+            { 
+                UnitOfWork.Contents.AddContent(Mapper.Map<Content>(model));
+                UnitOfWork.Save();
+                return model.ToString();
+            }
+            return BadRequest(ModelState).ToString();
         }
 
         // PUT api/values/5

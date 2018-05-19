@@ -5,6 +5,6 @@ namespace Project.Services
 {
     public interface ICategoryService
     {
-        IEnumerable<Category> GetAllCategories();
+        IEnumerable<Category> AllCategories { get; }
     }
 }

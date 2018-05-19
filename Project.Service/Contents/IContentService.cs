@@ -5,7 +5,7 @@ namespace Project.Services
 {
     public interface IContentService
     {
-        IEnumerable<Content> GetAllContents();
+        IEnumerable<Content> AllContents { get; }
 
         Content GetContent(int id);
 

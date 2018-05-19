@@ -8,7 +8,7 @@ using System;
 
 namespace ProjectAPI.Migrations
 {
-    [DbContext(typeof(ProjectDbContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class ProjectDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

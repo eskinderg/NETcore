@@ -7,34 +7,21 @@ namespace Project.Services
 {
     public class FolderService : IFolderService
     {
-        private readonly IRepository<Folder> _folderRepository;
+        public IRepository<Folder> FolderRepository { get; }
 
-        public FolderService(IRepository<Folder> folderRepository)
-        {
-            _folderRepository = folderRepository;
-        }
+        public FolderService(IRepository<Folder> folderRepository) => FolderRepository = folderRepository;
 
-        public IEnumerable<Folder> GetAllFolders()
-        {
-            // return new List<Folder> { new Folder{ Name="Myname", Id = 2}};
-            return _folderRepository.Table.ToList();
-        }
+        public IEnumerable<Folder> GetAllFolders() => FolderRepository.Table.ToList();
 
-        public Folder GetFolder(string name)
-        {
-            return _folderRepository.Table.FirstOrDefault(f => f.Name == name);
-        }
+        public Folder GetFolder(string name) => FolderRepository.Table.FirstOrDefault(f => f.Name == name);
 
-        public Folder GetFolder(int id)
-        {
-            return _folderRepository.GetById(id);
-        }
+        public Folder GetFolder(int id) => FolderRepository.GetById(id);
 
         public IEnumerable<Folder> RootFolders
         {
             get
             {
-                return _folderRepository.Table.Where(f => f.Name == null).ToList();
+                return FolderRepository.Table.Where(f => f.Name == null).ToList();
             }
         }
     }

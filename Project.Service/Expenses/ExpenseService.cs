@@ -7,48 +7,21 @@ using Project.Data;
 
 namespace Project.Services
 {
-    public class ExpenseService: IExpenseService
+    public class ExpenseService : IExpenseService
     {
-        private readonly IRepository<Expense> _expenseRepository;
+        public IRepository<Expense> ExpenseRepository { get; }
 
-        public ExpenseService(IRepository<Expense> expenseRepository)
-        {
-            _expenseRepository = expenseRepository;
-        }
+        public ExpenseService(IRepository<Expense> expenseRepository) => ExpenseRepository = expenseRepository;
 
-        public Expense GetById(int id)
-        {
-            return _expenseRepository.GetById(id);
-            //return GetById(id);
-        }
+        public Expense GetById(int id) => ExpenseRepository.GetById(id);
 
-        public IEnumerable<Expense> All()
-        {
-            return _expenseRepository.Table.Include(e => e.Category).ToList();
-            //return Select().Include(e => e.Category.SubCategory);
-        }
+        public IEnumerable<Expense> All => ExpenseRepository.Table.Include(e => e.Category).ToList();
 
-        public IEnumerable<Expense> GetAllUnexpiredExpenses()
-        {
+        public IEnumerable<Expense> AllUnexpiredExpenses =>
+                        ExpenseRepository.Table.Include(e => e.Category.SubCategory)
+                        .Where(e => e.Date > DateTime.Now);
+        public IEnumerable<Expense> ExpiredExpenses => null;
 
-            return _expenseRepository.Table.Include(e => e.Category.SubCategory)
-                                                .Where(e => e.Date > DateTime.Now);
-            //return Select().Include(e => e.Category.SubCategory)
-            //                                    .Where(e => e.Date > DateTime.Now);
-        }
-
-        public IEnumerable<Expense> GetExpiredExpenses()
-        {
-            return null;
-            //return Select().Include(e => e.Category.SubCategory)
-             //                                   .Where(e => e.Date < DateTime.Now);
-        }
-
-        public IEnumerable<Expense> RemoveExpiredExpenses()
-        {
-            return null;
-            //var expiredExpenses = GetExpiredExpenses();
-            //return DeleteRange(expiredExpenses, true);
-        }
+        public IEnumerable<Expense> RemoveExpiredExpenses => null;
     }
 }

@@ -13,6 +13,8 @@ namespace ProjectAPI.Ioc
     {
         public static void RegisterServices(IServiceCollection services)
         {
+
+
             // ASP.NET HttpContext dependency
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -42,7 +44,7 @@ namespace ProjectAPI.Ioc
             // services.AddScoped<INotificationHandler<RemoveCustomerCommand>, CustomerCommandHandler>();
 
             // Infra - Data
-            services.AddScoped<ProjectDbContext>();
+            services.AddScoped<AppDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IContentService, ContentService>();
             services.AddScoped<IFolderService, FolderService>();

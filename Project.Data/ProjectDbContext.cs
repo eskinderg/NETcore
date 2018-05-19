@@ -8,23 +8,19 @@ using Microsoft.Extensions.Configuration;
 
 namespace Project.Data
 {
-    public class ProjectDbContext : DbContext 
+    public class AppDbContext : DbContext 
     {
-        public ProjectDbContext(DbContextOptions<ProjectDbContext> options) : 
-            base(options){}
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
 
-        public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity
-        {
-            return base.Set<TEntity>();
-        }
-       
+        public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity => base.Set<TEntity>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             var mappingInterface = typeof(IEntityTypeConfiguration<>);
 
-            var mappingTypes = typeof(ProjectDbContext).GetTypeInfo().Assembly.GetTypes()
+            var mappingTypes = typeof(AppDbContext).GetTypeInfo().Assembly.GetTypes()
                 .Where(x => x.GetInterfaces().Any(y => y.GetTypeInfo().IsGenericType && y.GetGenericTypeDefinition() == mappingInterface));
 
             var entityMethod = typeof(ModelBuilder).GetMethods()
