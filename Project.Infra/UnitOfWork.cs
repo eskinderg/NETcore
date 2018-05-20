@@ -13,9 +13,9 @@ namespace Project.Infra
 
 
         public UnitOfWork(
-            IContentService contents, 
-            IFolderService folders, 
-            ICategoryService categories, 
+            IContentService contents,
+            IFolderService folders,
+            ICategoryService categories,
             AppDbContext context )
         {
             Context = context;

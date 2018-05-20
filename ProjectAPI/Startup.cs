@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ProjectAPI.Identity.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ProjectAPI
 {
@@ -25,8 +26,6 @@ namespace ProjectAPI
         {
             var config = Configuration.GetSection("ApplicationSettings").Get<AppSettings>();
 
-            //Adding appSettings.json and binding it to AppSettings POCO class
-            //Later on you can use IOptions<AppSettings> appSettings to inject it using using Microsoft.Extensions.Options;
             services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
 
             services.AddDbContext<AppDbContext>(options => options.UseMySql(config.DbConnectionString, b => b.MigrationsAssembly("ProjectAPI")));
@@ -47,6 +46,11 @@ namespace ProjectAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Content API", Version = "v1" });
             });
 
             services.AddAuthorization(options =>
@@ -84,6 +88,12 @@ namespace ProjectAPI
 
             app.UseAuthentication();
 
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contents API V1");
+            });
+
+            app.UseSwagger();
             app.UseMvc();
         }
         private static void RegisterServices(IServiceCollection services)
