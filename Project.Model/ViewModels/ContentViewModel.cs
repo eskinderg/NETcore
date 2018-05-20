@@ -1,5 +1,4 @@
-﻿//using System.Runtime.Serialization;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Project.Model.Models;
 using System;
@@ -25,11 +24,13 @@ namespace Project.Model.ViewModels
         public int? FolderId { get; set; }
 
         //[DataMember]
+        public string Html { get; set; }
+
+        //[DataMember]
         public Folder Folder { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-                Title = "xxxxxx";
             if (string.IsNullOrEmpty(Title) || string.IsNullOrEmpty(Summary))
             {
                 yield return new ValidationResult("Title or Summary cannot be emmpty ");
