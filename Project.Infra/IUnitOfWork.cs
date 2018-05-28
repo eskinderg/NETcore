@@ -8,6 +8,8 @@ namespace Project.Infra
         ICategoryService Categories { get; }
         IFolderService Folders { get;  }
         IContentService Contents { get; }
+        IEventService Events { get; }
+        INoteService Notes { get; }
         int Save();
     }
 }

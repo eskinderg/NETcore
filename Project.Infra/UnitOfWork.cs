@@ -10,12 +10,15 @@ namespace Project.Infra
         public ICategoryService Categories { get; private set; }
         public IFolderService Folders { get; private set; }
         public IContentService Contents { get; private set; }
-
+        public IEventService Events { get; private set; }
+        public INoteService Notes { get; private set; }
 
         public UnitOfWork(
             IContentService contents,
             IFolderService folders,
             ICategoryService categories,
+            IEventService events,
+            INoteService notes,
             AppDbContext context )
         {
             Context = context;
@@ -23,6 +26,8 @@ namespace Project.Infra
             Categories = categories;
             Folders = folders;
             Contents = contents;
+            Events = events;
+            Notes = notes;
         }
 
         public int Save() => Context.SaveChanges();

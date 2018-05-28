@@ -6,6 +6,7 @@ using Project.Services;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectAPI.Identity.Authorization;
 using Project.Infra;
+using ProjectAPI.Services;
 
 namespace ProjectAPI.Ioc
 {
@@ -17,6 +18,8 @@ namespace ProjectAPI.Ioc
 
             // ASP.NET HttpContext dependency
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<System.Net.Http.HttpClient, System.Net.Http.HttpClient>();
+
 
             // Domain Bus (Mediator)
             // services.AddScoped<IMediatorHandler, InMemoryBus>();
@@ -47,7 +50,10 @@ namespace ProjectAPI.Ioc
             services.AddScoped<AppDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IContentService, ContentService>();
+            services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IFolderService, FolderService>();
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<INoteService, NoteService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

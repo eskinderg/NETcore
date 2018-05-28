@@ -11,9 +11,10 @@ using System;
 namespace ProjectAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180526135934_events_notes")]
+    partial class events_notes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

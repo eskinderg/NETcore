@@ -37,6 +37,7 @@ namespace Project.Data
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
+            Entities.Update(entity);
         }
 
         public void Update(IEnumerable<T> entities)
