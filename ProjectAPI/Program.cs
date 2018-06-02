@@ -13,6 +13,7 @@ namespace ProjectAPI
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:3000")
                 .Build();
     }
 }

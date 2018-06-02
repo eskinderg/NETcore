@@ -33,7 +33,7 @@ namespace ProjectAPI.Controllers
 
         // GET api/contents
         [HttpGet]
-        [Authorize(Policy="CanWriteCustomerData")]
+        // [Authorize(Policy="CanWriteCustomerData")]
         public JsonResult Get()
         {
             // return Json ( HttpContext.User.Identity.IsAuthenticated);

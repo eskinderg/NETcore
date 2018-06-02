@@ -15,7 +15,7 @@ namespace ProjectAPI.Controllers
         public EventsController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
         [HttpGet]
-        [Authorize(Policy = "CanWriteCustomerData")]
+        [Authorize(Policy = "CanRead")]
         public JsonResult Get()
         {
             return Json(UnitOfWork.Events.AllEvents);
@@ -23,6 +23,7 @@ namespace ProjectAPI.Controllers
 
         // POST api/events
         [HttpPost]
+        [Authorize(Policy = "CanWrite")]
         public JsonResult Post([FromBody]Event model)
         {
             if (ModelState.IsValid)
@@ -36,10 +37,12 @@ namespace ProjectAPI.Controllers
 
         // GET api/events/5
         [HttpGet("{id}")]
+        [Authorize(Policy = "CanRead")]
         public JsonResult Get(int id) => Json(UnitOfWork.Events.GetEventById(id));
 
         // DELETE api/events/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "CanWrite")]
         public JsonResult Delete(int id)
         {
             var evnt = UnitOfWork.Events.GetEventById(id);
@@ -50,6 +53,7 @@ namespace ProjectAPI.Controllers
 
         // PUT api/events/
         [HttpPut()]
+        [Authorize(Policy = "CanWrite")]
         public JsonResult Put([FromBody]Event model)
         {
             var updated = UnitOfWork.Events.Update(model);
@@ -58,6 +62,7 @@ namespace ProjectAPI.Controllers
         }
 
         // PUT api/events/
+        [Authorize(Policy = "CanWrite")]
         [HttpPut("Toggle")]
         public JsonResult Toggle([FromBody]Event model)
         {

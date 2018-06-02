@@ -55,9 +55,14 @@ namespace ProjectAPI
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Alice Smith")));
-                options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Bob Smith")));
-                options.AddPolicy("CanRemoveCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("Customers", "Remove")));
+                // options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Alice Smith")));
+                // options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Bob Smith")));
+                // options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Eskinder")));
+                // options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Kukusha")));
+                // options.AddPolicy("CanRemoveCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("Customers", "Remove")));
+                // options.AddPolicy("IsAdmin", policy => policy.Requirements.Add(new RoleClaimRequirement("Admin")));
+                options.AddPolicy("CanWrite", policy => policy.Requirements.Add(new RoleClaimRequirement("Write")));
+                options.AddPolicy("CanRead", policy => policy.Requirements.Add(new RoleClaimRequirement("Read")));
             });
 
             services.AddAuthentication(options =>

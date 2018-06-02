@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ProjectAPI.Identity.Authorization;
 using Project.Infra;
 using ProjectAPI.Services;
+using ProjectAPI.Authorization;
 
 namespace ProjectAPI.Ioc
 {
@@ -26,6 +27,7 @@ namespace ProjectAPI.Ioc
 
             // ASP.NET Authorization Polices
             services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); ;
+            services.AddSingleton<IAuthorizationHandler, RoleClaimRequirmentHandler>(); ;
 
             // Application
             services.AddSingleton(Mapper.Configuration);

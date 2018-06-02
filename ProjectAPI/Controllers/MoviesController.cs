@@ -25,7 +25,7 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy="CanWriteCustomerData")]
+        // [Authorize(Policy="CanWriteCustomerData")]
         public JsonResult Get()
         {
             return Json(this.MovieSerice.GetPopular());

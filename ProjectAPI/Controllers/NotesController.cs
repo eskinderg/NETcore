@@ -15,7 +15,8 @@ namespace ProjectAPI.Controllers
         public NotesController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
         [HttpGet]
-        [Authorize(Policy = "CanWriteCustomerData")]
+        // [Authorize(Policy = "CanWriteCustomerData")]
+        [Authorize(Policy = "CanRead")]
         public JsonResult Get()
         {
             return Json(UnitOfWork.Notes.AllNotes);
@@ -23,6 +24,7 @@ namespace ProjectAPI.Controllers
 
         // POST api/notes
         [HttpPost]
+        [Authorize(Policy = "CanWrite")]
         public JsonResult Post([FromBody]Note model)
         {
             if (ModelState.IsValid)
@@ -36,6 +38,7 @@ namespace ProjectAPI.Controllers
 
         // GET api/notes/5
         [HttpGet("{id}")]
+        [Authorize(Policy = "CanRead")]
         public JsonResult Get(int id)
         {
             return Json(UnitOfWork.Notes.GetNoteById(id));
@@ -43,6 +46,7 @@ namespace ProjectAPI.Controllers
 
         // DELETE api/notes/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "CanRead")]
         public JsonResult Delete(int id)
         {
             var evnt = UnitOfWork.Notes.GetNoteById(id);
@@ -53,6 +57,7 @@ namespace ProjectAPI.Controllers
 
         // PUT api/notes/
         // [HttpPut("{id}")]
+        [Authorize(Policy = "CanWrite")]
         public JsonResult Put([FromBody]Note model)
         {
             var updated = UnitOfWork.Notes.Update(model);
