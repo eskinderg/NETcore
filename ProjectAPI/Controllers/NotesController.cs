@@ -17,10 +17,7 @@ namespace ProjectAPI.Controllers
         [HttpGet]
         // [Authorize(Policy = "CanWriteCustomerData")]
         [Authorize(Policy = "CanRead")]
-        public JsonResult Get()
-        {
-            return Json(UnitOfWork.Notes.AllNotes);
-        }
+        public JsonResult Get() => Json(UnitOfWork.Notes.AllNotes);
 
         // POST api/notes
         [HttpPost]
@@ -39,10 +36,7 @@ namespace ProjectAPI.Controllers
         // GET api/notes/5
         [HttpGet("{id}")]
         [Authorize(Policy = "CanRead")]
-        public JsonResult Get(int id)
-        {
-            return Json(UnitOfWork.Notes.GetNoteById(id));
-        }
+        public JsonResult Get(int id) => Json(UnitOfWork.Notes.GetNoteById(id));
 
         // DELETE api/notes/5
         [HttpDelete("{id}")]
@@ -57,6 +51,7 @@ namespace ProjectAPI.Controllers
 
         // PUT api/notes/
         // [HttpPut("{id}")]
+        [HttpPut]
         [Authorize(Policy = "CanWrite")]
         public JsonResult Put([FromBody]Note model)
         {
