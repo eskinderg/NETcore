@@ -22,7 +22,6 @@ namespace Project.Infra
             AppDbContext context )
         {
             Context = context;
-
             Categories = categories;
             Folders = folders;
             Contents = contents;
@@ -31,7 +30,6 @@ namespace Project.Infra
         }
 
         public int Save() => Context.SaveChanges();
-
         public void Dispose() => Context.Dispose();
     }
 }

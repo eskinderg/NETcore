@@ -20,7 +20,6 @@ namespace ProjectAPI.Controllers
     {
         public IMapper Mapper { get;}
         public IUnitOfWork UnitOfWork { get; }
-
         public AppSettings AppSettings { get; set; }
 
         public ContentsController(IUnitOfWork unitOfWork,IMapper mapper, IOptions<AppSettings> appSettings)
@@ -28,7 +27,6 @@ namespace ProjectAPI.Controllers
             Mapper = mapper;
             UnitOfWork = unitOfWork;
             AppSettings = appSettings.Value;
-
         }
 
         // GET api/contents

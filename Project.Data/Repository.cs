@@ -30,7 +30,6 @@ namespace Project.Data
 
             foreach (var entity in entities)
                 Entities.Add(entity);
-
         }
 
         public void Update(T entity)

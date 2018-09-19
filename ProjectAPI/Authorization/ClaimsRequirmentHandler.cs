@@ -7,7 +7,6 @@ namespace ProjectAPI.Identity.Authorization
 {
     public class ClaimsRequirementHandler : AuthorizationHandler<MyClaimRequirement>
     {
-
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, MyClaimRequirement requirement)
         {
             var claim = context.User.Claims.FirstOrDefault(c => c.Type == requirement.ClaimName);

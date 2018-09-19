@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-
 namespace Project.Model.ViewModels
 {
     public class CategoryViewModel

@@ -14,6 +14,6 @@ namespace ProjectAPI.Controllers
         public BaseController(IUnitOfWork unitOfWork,IMapper mapper) {
             Mapper = mapper;
             UnitOfWork = unitOfWork;
-        } 
+        }
     }
 }

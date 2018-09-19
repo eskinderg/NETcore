@@ -16,11 +16,9 @@ namespace ProjectAPI.Ioc
         public static void RegisterServices(IServiceCollection services)
         {
 
-
             // ASP.NET HttpContext dependency
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<System.Net.Http.HttpClient, System.Net.Http.HttpClient>();
-
 
             // Domain Bus (Mediator)
             // services.AddScoped<IMediatorHandler, InMemoryBus>();

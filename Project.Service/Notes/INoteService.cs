@@ -6,7 +6,6 @@ namespace Project.Services
 {
     public interface INoteService
     {
-
         IEnumerable<Note> AllNotes { get; }
         Note GetNoteById(int id);
         Note Add(Note e);
