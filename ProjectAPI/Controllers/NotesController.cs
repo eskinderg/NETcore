@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Project.Infra;
 using AutoMapper;
 using Project.Model.Models;
-using Microsoft.AspNetCore.Cors;
 
 namespace ProjectAPI.Controllers
 {

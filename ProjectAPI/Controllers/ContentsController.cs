@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Project.Services;
+/* using Project.Services; */
 using Project.Model.Models;
 using AutoMapper;
 using Project.Model.ViewModels;
 using Project.Infra;
-using System.Security.Claims;
+/* using System.Security.Claims; */
 using Microsoft.Extensions.Options;
 
 namespace ProjectAPI.Controllers
@@ -18,14 +18,14 @@ namespace ProjectAPI.Controllers
     [ApiVersion("1.0")]
     public class ContentsController : Controller
     {
-        public IMapper Mapper { get;}
-        public IUnitOfWork UnitOfWork { get; }
+        public IMapper Mapper          { get;}
+        public IUnitOfWork UnitOfWork  { get; }
         public AppSettings AppSettings { get; set; }
 
         public ContentsController(IUnitOfWork unitOfWork,IMapper mapper, IOptions<AppSettings> appSettings)
         {
-            Mapper = mapper;
-            UnitOfWork = unitOfWork;
+            Mapper      = mapper;
+            UnitOfWork  = unitOfWork;
             AppSettings = appSettings.Value;
         }
 
@@ -48,7 +48,7 @@ namespace ProjectAPI.Controllers
         public string Post([FromBody]ContentViewModel model)
         {
             if(ModelState.IsValid)
-            { 
+            {
                 UnitOfWork.Contents.AddContent(Mapper.Map<Content>(model));
                 UnitOfWork.Save();
                 return model.ToString();

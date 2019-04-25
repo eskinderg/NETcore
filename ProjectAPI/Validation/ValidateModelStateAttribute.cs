@@ -1,4 +1,4 @@
-using System;
+/* using System; */
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -8,7 +8,7 @@ public class ValidateModelStateAttribute : ActionFilterAttribute
     {
         if (!context.ModelState.IsValid)
         {
-            context.Result = new BadRequestObjectResult(context.ModelState); 
+            context.Result = new BadRequestObjectResult(context.ModelState);
         }
     }
 }

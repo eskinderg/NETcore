@@ -7,11 +7,11 @@ namespace Project.Services
     {
         Expense GetById(int id);
 
-        IEnumerable<Expense> All { get; }
+        IEnumerable<Expense> All                   { get; }
 
-        IEnumerable<Expense> AllUnexpiredExpenses { get; }
+        IEnumerable<Expense> AllUnexpiredExpenses  { get; }
 
-        IEnumerable<Expense> ExpiredExpenses { get; }
+        IEnumerable<Expense> ExpiredExpenses       { get; }
 
         IEnumerable<Expense> RemoveExpiredExpenses { get; }
     }

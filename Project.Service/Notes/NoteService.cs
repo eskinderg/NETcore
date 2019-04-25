@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Project.Model.Models;
 using Project.Data;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 

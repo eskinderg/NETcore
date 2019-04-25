@@ -11,7 +11,7 @@ namespace Project.Services
 
         Folder GetFolder(int id);
 
-        IEnumerable<Folder> RootFolders { get; } 
+        IEnumerable<Folder> RootFolders { get; }
 
     }
 }

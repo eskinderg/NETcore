@@ -8,16 +8,16 @@ namespace Project.Model.ViewModels
     public class FolderViewModel
     {
         //[DataMember]
-        public int Id { get; set; }
+        public int Id                               { get; set; }
 
         //[DataMember]
-        public string Name { get; set; }
+        public string Name                          { get; set; }
 
         //[DataMember]
-        public int? ParentId { get; set; }
+        public int? ParentId                        { get; set; }
 
         //[DataMember]
-        public virtual Folder Parent { get; set; }
+        public virtual Folder Parent                { get; set; }
 
         //[DataMember]
         public virtual ICollection<Folder> Children { get; set; }

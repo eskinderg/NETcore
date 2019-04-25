@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Project.Data
 {
-    public class AppDbContext : DbContext 
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
 
@@ -30,10 +30,11 @@ namespace Project.Data
 
             foreach (var mappingType in mappingTypes)
             {
-                var genericTypeArg = mappingType.GetInterfaces().Single().GenericTypeArguments.Single();
+                var genericTypeArg      = mappingType.GetInterfaces().Single().GenericTypeArguments.Single();
                 var genericEntityMethod = entityMethod.MakeGenericMethod(genericTypeArg);
-                var entityBuilder = genericEntityMethod.Invoke(modelBuilder, null);
-                var mapper = Activator.CreateInstance(mappingType);
+                var entityBuilder       = genericEntityMethod.Invoke(modelBuilder, null);
+                var mapper              = Activator.CreateInstance(mappingType);
+
                 mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
             }
         }

@@ -32,9 +32,9 @@ namespace ProjectAPI
 
             services.AddApiVersioning(options =>
             {
-                options.ApiVersionReader = new HeaderApiVersionReader(config.Api.VersionReader);
+                options.ApiVersionReader                    = new HeaderApiVersionReader(config.Api.VersionReader);
                 options.AssumeDefaultVersionWhenUnspecified = config.Api.AssumeDefaultVersionWhenUnspecified;
-                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.DefaultApiVersion                   = new ApiVersion(1, 0);
             });
 
             services.AddAutoMapper();
@@ -71,8 +71,8 @@ namespace ProjectAPI
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
                 {
-                    o.Authority = config.IdentityServer.Authority;
-                    o.Audience = config.IdentityServer.Audience;
+                    o.Authority            = config.IdentityServer.Authority;
+                    o.Audience             = config.IdentityServer.Audience;
                     o.RequireHttpsMetadata = config.IdentityServer.RequireHttpsMetadata;
                 });
 

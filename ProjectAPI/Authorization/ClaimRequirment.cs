@@ -6,11 +6,12 @@ namespace ProjectAPI.Identity.Authorization
     {
         public MyClaimRequirement(string claimName, string claimValue)
         {
-            ClaimName = claimName;
+            ClaimName  = claimName;
             ClaimValue = claimValue;
         }
 
-        public string ClaimName { get; set; }
+        public string ClaimName  { get; set; }
+
         public string ClaimValue { get; set; }
     }
 }
