@@ -3,16 +3,16 @@ using Project.Model;
 
 namespace Project.Services
 {
-    public interface IExpenseService
-    {
-        Expense GetById(int id);
+  public interface IExpenseService
+  {
+    Expense GetById(int id);
 
-        IEnumerable<Expense> All                   { get; }
+    IEnumerable<Expense> All                   { get; }
 
-        IEnumerable<Expense> AllUnexpiredExpenses  { get; }
+    IEnumerable<Expense> AllUnexpiredExpenses  { get; }
 
-        IEnumerable<Expense> ExpiredExpenses       { get; }
+    IEnumerable<Expense> ExpiredExpenses       { get; }
 
-        IEnumerable<Expense> RemoveExpiredExpenses { get; }
-    }
+    IEnumerable<Expense> RemoveExpiredExpenses { get; }
+  }
 }

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace ProjectAPI.Services
 {
-    public interface IMovieService
-    {
-        Task <List<MovieViewModel>> GetPopular();
-    }
+  public interface IMovieService
+  {
+    Task <List<MovieViewModel>> GetPopular();
+  }
 }

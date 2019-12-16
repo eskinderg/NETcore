@@ -7,17 +7,17 @@ using ProjectAPI.Identity.Authorization;
 
 namespace ProjectAPI.Authorization
 {
-    public class RoleClaimRequirmentHandler : AuthorizationHandler<RoleClaimRequirement>
+  public class RoleClaimRequirmentHandler : AuthorizationHandler<RoleClaimRequirement>
+  {
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleClaimRequirement requirement)
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleClaimRequirement requirement)
-        {
-            // var claim = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+      // var claim = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
 
-            if (context.User.HasClaim(ClaimTypes.Role, requirement.Role))
-                context.Succeed(requirement);
+      if (context.User.HasClaim(ClaimTypes.Role, requirement.Role))
+        context.Succeed(requirement);
 
-            return Task.CompletedTask;
-        }
+      return Task.CompletedTask;
     }
+  }
 
 }

@@ -6,18 +6,18 @@ using System;
 
 namespace ProjectAPI.Helpers
 {
-    public static class UriHelper
+  public static class UriHelper
+  {
+#region static methods
+    internal static Uri CombineUri(Uri baseUri, string relativeUrl)
     {
-        #region static methods
-        internal static Uri CombineUri(Uri baseUri, string relativeUrl)
-        {
-            string local = baseUri.ToString() + relativeUrl;
-            if (local != null && (!String.IsNullOrEmpty(local)))
-            {
-                return new Uri(local);
-            }
-            return new Uri(local);
-        }
-        #endregion
+      string local = baseUri.ToString() + relativeUrl;
+      if (local != null && (!String.IsNullOrEmpty(local)))
+      {
+        return new Uri(local);
+      }
+      return new Uri(local);
     }
+#endregion
+  }
 }

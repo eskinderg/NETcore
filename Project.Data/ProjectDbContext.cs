@@ -8,53 +8,53 @@ using Microsoft.Extensions.Configuration;
 
 namespace Project.Data
 {
-    public class AppDbContext : DbContext
+  public class AppDbContext : DbContext
+  {
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
+
+    public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity => base.Set<TEntity>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
+      base.OnModelCreating(modelBuilder);
 
-        public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity => base.Set<TEntity>();
+      var mappingInterface = typeof(IEntityTypeConfiguration<>);
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+      var mappingTypes = typeof(AppDbContext).GetTypeInfo().Assembly.GetTypes()
+        .Where(x => x.GetInterfaces().Any(y => y.GetTypeInfo().IsGenericType && y.GetGenericTypeDefinition() == mappingInterface));
 
-            var mappingInterface = typeof(IEntityTypeConfiguration<>);
+      var entityMethod = typeof(ModelBuilder).GetMethods()
+        .Single(x => x.Name == "Entity" &&
+            x.IsGenericMethod &&
+            x.ReturnType.Name == "EntityTypeBuilder`1");
 
-            var mappingTypes = typeof(AppDbContext).GetTypeInfo().Assembly.GetTypes()
-                .Where(x => x.GetInterfaces().Any(y => y.GetTypeInfo().IsGenericType && y.GetGenericTypeDefinition() == mappingInterface));
+      foreach (var mappingType in mappingTypes)
+      {
+        var genericTypeArg      = mappingType.GetInterfaces().Single().GenericTypeArguments.Single();
+        var genericEntityMethod = entityMethod.MakeGenericMethod(genericTypeArg);
+        var entityBuilder       = genericEntityMethod.Invoke(modelBuilder, null);
+        var mapper              = Activator.CreateInstance(mappingType);
 
-            var entityMethod = typeof(ModelBuilder).GetMethods()
-                .Single(x => x.Name == "Entity" &&
-                        x.IsGenericMethod &&
-                        x.ReturnType.Name == "EntityTypeBuilder`1");
-
-            foreach (var mappingType in mappingTypes)
-            {
-                var genericTypeArg      = mappingType.GetInterfaces().Single().GenericTypeArguments.Single();
-                var genericEntityMethod = entityMethod.MakeGenericMethod(genericTypeArg);
-                var entityBuilder       = genericEntityMethod.Invoke(modelBuilder, null);
-                var mapper              = Activator.CreateInstance(mappingType);
-
-                mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
-            }
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // get the configuration from the app settings
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            // define the database to use
-            // optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-        }
-
-        public int ExecuteSqlCommand(string sql, bool doNotEnsureTransaction = false, int? timeout = null, params object[] parameters)
-        {
-            throw new NotImplementedException();
-        }
-
+        mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
+      }
     }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+      // get the configuration from the app settings
+      var config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json")
+        .Build();
+
+      // define the database to use
+      // optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+    }
+
+    public int ExecuteSqlCommand(string sql, bool doNotEnsureTransaction = false, int? timeout = null, params object[] parameters)
+    {
+      throw new NotImplementedException();
+    }
+
+  }
 }

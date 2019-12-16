@@ -3,8 +3,8 @@ using Project.Model.Models;
 
 namespace Project.Services
 {
-    public interface ICategoryService
-    {
-        IEnumerable<Category> AllCategories { get; }
-    }
+  public interface ICategoryService
+  {
+    IEnumerable<Category> AllCategories { get; }
+  }
 }

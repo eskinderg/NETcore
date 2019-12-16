@@ -4,13 +4,13 @@ using Project.Model.ViewModels;
 
 namespace Project.AutoMapper
 {
-    public class MappingProfile : Profile
+  public class MappingProfile : Profile
+  {
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            CreateMap<Content, ContentViewModel>();
-            CreateMap<Folder, FolderViewModel>();
-            CreateMap<Category, CategoryViewModel>();
-        }
+      CreateMap<Content, ContentViewModel>();
+      CreateMap<Folder, FolderViewModel>();
+      CreateMap<Category, CategoryViewModel>();
     }
+  }
 }

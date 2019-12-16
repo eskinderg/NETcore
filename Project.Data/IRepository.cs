@@ -4,26 +4,26 @@ using Project.Model;
 
 namespace Project.Data
 {
-    public interface IRepository<T> where T : BaseEntity
-    {
+  public interface IRepository<T> where T : BaseEntity
+  {
 
-        T GetById(object id);
+    T GetById(object id);
 
-        void Insert(T entity);
+    void Insert(T entity);
 
-        void Insert(IEnumerable<T> entities);
+    void Insert(IEnumerable<T> entities);
 
-        void Update(T entity);
+    void Update(T entity);
 
-        void Update(IEnumerable<T> entities);
+    void Update(IEnumerable<T> entities);
 
-        void Delete(T entity);
+    void Delete(T entity);
 
-        void Delete(IEnumerable<T> entities);
+    void Delete(IEnumerable<T> entities);
 
-        IQueryable<T> Table { get; }
+    IQueryable<T> Table { get; }
 
-        IQueryable<T> TableNoTracking { get; }
-    }
+    IQueryable<T> TableNoTracking { get; }
+  }
 
 }

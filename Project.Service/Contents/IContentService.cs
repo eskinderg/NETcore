@@ -3,12 +3,12 @@ using Project.Model.Models;
 
 namespace Project.Services
 {
-    public interface IContentService
-    {
-        IEnumerable<Content> AllContents { get; }
+  public interface IContentService
+  {
+    IEnumerable<Content> AllContents { get; }
 
-        Content GetContent(int id);
+    Content GetContent(int id);
 
-        Content AddContent(Content content);
-    }
+    Content AddContent(Content content);
+  }
 }

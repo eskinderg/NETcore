@@ -9,23 +9,23 @@ using Microsoft.AspNetCore.Cors;
 
 namespace ProjectAPI.Controllers
 {
-    [Produces("application/json")]
-    [EnableCors("CorsPolicy")]
-    [Route("api/Folders")]
-    public class FoldersController : Controller
+  [Produces("application/json")]
+  [EnableCors("CorsPolicy")]
+  [Route("api/Folders")]
+  public class FoldersController : Controller
+  {
+    private readonly IFolderService _folderService;
+
+    public FoldersController(IFolderService folderService)
     {
-        private readonly IFolderService _folderService;
-
-        public FoldersController(IFolderService folderService)
-        {
-            _folderService = folderService;
-        }
-
-        // GET api/folders
-        [HttpGet]
-        public JsonResult Get()
-        {
-            return Json(_folderService.GetAllFolders());
-        }
+      _folderService = folderService;
     }
+
+    // GET api/folders
+    [HttpGet]
+    public JsonResult Get()
+    {
+      return Json(_folderService.GetAllFolders());
+    }
+  }
 }
