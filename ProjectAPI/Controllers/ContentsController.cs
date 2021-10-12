@@ -13,7 +13,7 @@ namespace ProjectAPI.Controllers
 {
   [Produces("application/json")]
   [Route("api/[controller]")]
-  [EnableCors("CorsPolicy")]
+  /* [EnableCors("CorsPolicy")] */
   [Authorize]
   [ApiVersion("1.0")]
   public class ContentsController : Controller

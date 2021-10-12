@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Cors;
 namespace ProjectAPI.Controllers
 {
   [Produces("application/json")]
-  [EnableCors("CorsPolicy")]
+  /* [EnableCors("CorsPolicy")] */
   [Route("api/Folders")]
   public class FoldersController : Controller
   {

@@ -6,7 +6,7 @@ using AutoMapper;
 namespace ProjectAPI.Controllers
 {
   [Produces("application/json")]
-  [EnableCors("CorsPolicy")]
+  /* [EnableCors("CorsPolicy")] */
   public class BaseController : Controller
   {
     public IMapper Mapper { get;}

@@ -11,6 +11,7 @@ using ProjectAPI.Identity.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace ProjectAPI
 {
@@ -50,7 +51,7 @@ namespace ProjectAPI
 
       services.AddSwaggerGen(c =>
           {
-          c.SwaggerDoc("v1", new Info { Title = "Content API", Version = "v1" });
+          c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" });
           });
 
       services.AddAuthorization(options =>
@@ -78,10 +79,12 @@ namespace ProjectAPI
 
       RegisterServices(services);
 
-      services.AddMvc(options =>
-          {
-          options.Filters.Add(typeof(ValidateModelStateAttribute));
-          });
+      /* services.AddMvc(options => */
+      /*     { */
+      /*     options.Filters.Add(typeof(ValidateModelStateAttribute)); */
+      /*     }); */
+      services.AddControllers();
+
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -99,7 +102,16 @@ namespace ProjectAPI
           });
 
       app.UseSwagger();
-      app.UseMvc();
+      /* app.UseMvc(); */
+      app.UseRouting(); //If your app calls UseStaticFiles, place UseStaticFiles before UseRouting
+      app.UseAuthorization();
+      app.UseEndpoints(endpoints =>
+          {
+          endpoints.MapControllerRoute(
+              name: "default",
+              pattern: "{controller=Home}/{action=Index}/{id?}");
+          });
+
     }
     private static void RegisterServices(IServiceCollection services)
     {
