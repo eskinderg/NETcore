@@ -6,12 +6,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Project.Services;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectAPI.Controllers
 {
   [Produces("application/json")]
   /* [EnableCors("CorsPolicy")] */
   [Route("api/Folders")]
+  [Authorize]
   public class FoldersController : Controller
   {
     private readonly IFolderService _folderService;

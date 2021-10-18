@@ -40,15 +40,6 @@ namespace ProjectAPI
 
       services.AddAutoMapper();
 
-      services.AddCors(options =>
-          {
-          options.AddPolicy("CorsPolicy",
-              builder => builder.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials());
-          });
-
       services.AddSwaggerGen(c =>
           {
           c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" });
@@ -93,6 +84,11 @@ namespace ProjectAPI
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseCors(x => x
+          .AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
 
       app.UseAuthentication();
 
