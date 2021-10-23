@@ -66,6 +66,7 @@ namespace ProjectAPI
             o.Authority            = config.IdentityServer.Authority;
             o.Audience             = config.IdentityServer.Audience;
             o.RequireHttpsMetadata = config.IdentityServer.RequireHttpsMetadata;
+            o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters {ValidAudiences = new string[] {"master-realm", "account", "api2"}};
             });
 
       RegisterServices(services);
