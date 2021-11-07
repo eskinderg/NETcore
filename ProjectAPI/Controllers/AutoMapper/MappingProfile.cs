@@ -11,6 +11,7 @@ namespace Project.AutoMapper
       CreateMap<Content, ContentViewModel>();
       CreateMap<Folder, FolderViewModel>();
       CreateMap<Category, CategoryViewModel>();
+      CreateMap<Event, EventViewModel>();
     }
   }
 }

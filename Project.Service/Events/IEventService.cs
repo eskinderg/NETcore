@@ -7,9 +7,10 @@ namespace Project.Services
   public interface IEventService
   {
     IEnumerable<Event> AllEvents { get; }
-    Event GetEventById(int id);
+    Event GetEventById(int id, string userId);
     Event Add(Event e);
     Event Update(Event e);
     Event Delete(Event e);
+    IEnumerable<Event> GetEventsByUserId (string userid);
   }
 }

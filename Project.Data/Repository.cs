@@ -13,7 +13,7 @@ namespace Project.Data
 
     public Repository(AppDbContext context) => Context = context;
 
-    public T GetById(object id) => Entities.Find(id);
+    public T GetById(params object[] id) => Entities.Find(id);
 
     public void Insert(T entity)
     {

@@ -10,7 +10,7 @@ namespace Project.Data.Mapping
     public void Map(EntityTypeBuilder<Event> builder)
     {
       //Primary Key
-      builder.HasKey(c => c.Id);
+      builder.HasKey(c => new {c.Id, c.UserID});
 
       //Properties
 
@@ -20,6 +20,7 @@ namespace Project.Data.Mapping
       builder.Property(c => c.Id).HasColumnName("event_id");
       builder.Property(c => c.Complete).HasColumnName("complete");
       builder.Property(c => c.Title).HasColumnName("title");
+      builder.Property(c => c.UserID).HasColumnName("user_id");
     }
   }
 }

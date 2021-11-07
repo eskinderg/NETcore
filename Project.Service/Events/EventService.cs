@@ -26,12 +26,15 @@ namespace Project.Services
       return e;
     }
 
-    public Event GetEventById(int id) => EventRepository.GetById(id);
+    public Event GetEventById(int id, string userId) => EventRepository.GetById(id, userId);
 
     public Event Delete(Event e)
     {
       EventRepository.Delete(e);
       return e;
     }
+
+    public IEnumerable<Event> GetEventsByUserId (string userid) => 
+      EventRepository.Table.Where(e => e.UserID == userid);
   }
 }

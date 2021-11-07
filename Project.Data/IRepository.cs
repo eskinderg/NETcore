@@ -7,7 +7,7 @@ namespace Project.Data
   public interface IRepository<T> where T : BaseEntity
   {
 
-    T GetById(object id);
+    T GetById(params object[] id);
 
     void Insert(T entity);
 
