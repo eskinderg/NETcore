@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace ProjectAPI
 {
@@ -79,7 +80,7 @@ namespace ProjectAPI
 
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
       if (env.IsDevelopment())
       {
