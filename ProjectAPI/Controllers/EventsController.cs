@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Collections.Generic;
 using Project.Model.ViewModels;
 using Microsoft.AspNetCore.Http;
+using ProjectAPI.Identity.Authorization;
 /* using Microsoft.AspNetCore.Cors; */
 
 namespace ProjectAPI.Controllers
@@ -79,7 +80,7 @@ namespace ProjectAPI.Controllers
     public JsonResult Toggle([FromBody]Event model)
     {
       model.Complete = !model.Complete;
-      model.UserID = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+      model.UserID = User.GetLoggedInUserId<string>();
       var updated = UnitOfWork.Events.Update(model);
       if(updated != null) {
         UnitOfWork.Save();
