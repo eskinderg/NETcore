@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using Project.Model.ViewModels;
 using Microsoft.AspNetCore.Http;
 using ProjectAPI.Identity.Authorization;
-/* using Microsoft.AspNetCore.Cors; */
 
 namespace ProjectAPI.Controllers
 {

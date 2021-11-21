@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 namespace ProjectAPI.Identity.Authorization
 {
     public class ProjectJwtBearerEvents : JwtBearerEvents {
-        
+
         public override Task Challenge(JwtBearerChallengeContext context){
 
             context.HandleResponse();
@@ -15,8 +15,8 @@ namespace ProjectAPI.Identity.Authorization
             var payload = new JObject
             {
                 ["error"] = context.Error,
-                ["error_description"] = context.ErrorDescription,
-                ["error_uri"] = context.ErrorUri
+                    ["error_description"] = context.ErrorDescription,
+                    ["error_uri"] = context.ErrorUri
             };
 
             context.Response.ContentType = "application/json";

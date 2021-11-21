@@ -7,8 +7,6 @@ using ProjectAPI.Ioc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using ProjectAPI.Identity.Authorization;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Hosting;
 
@@ -27,27 +25,16 @@ namespace ProjectAPI
       var config = Configuration.GetSection("ApplicationSettings").Get<AppSettings>();
 
       services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
-
       services.AddDbContext<AppDbContext>(options => options.UseMySql(config.DbConnectionString, b => b.MigrationsAssembly("ProjectAPI")));
-
-      services.AddApiVersioning(options =>
-          {
-          options.ApiVersionReader                    = new HeaderApiVersionReader(config.Api.VersionReader);
-          options.AssumeDefaultVersionWhenUnspecified = config.Api.AssumeDefaultVersionWhenUnspecified;
-          options.DefaultApiVersion                   = new ApiVersion(1, 0);
-          });
-
+      services.AddApiVersioningConfiguration(config.Api.VersionReader, config.Api.AssumeDefaultVersionWhenUnspecified);
       services.AddAutoMapper();
-
       services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" }); });
-
       services.AddAuthorizationConfiguration();
 
       services.AddAuthenticationConfiguration()
-      .AddJwtBearerConfiguration(config.IdentityServer.Authority,config.IdentityServer.Audience,config.IdentityServer.RequireHttpsMetadata);
+        .AddJwtBearerConfiguration(config.IdentityServer.Authority,config.IdentityServer.Audience,config.IdentityServer.RequireHttpsMetadata);
 
       RegisterServices(services);
-
       services.AddControllers();
 
     }
@@ -59,28 +46,17 @@ namespace ProjectAPI
         app.UseDeveloperExceptionPage();
       }
 
-      app.UseCors(x => x
-          .AllowAnyOrigin()
-          .AllowAnyMethod()
-          .AllowAnyHeader());
+      app.AddCorsConfiguration();
 
       app.UseAuthentication();
 
-      app.UseSwaggerUI(c =>
-          {
-          c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contents API V1");
-          });
+      app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contents API V1"); });
 
       app.UseSwagger();
-      /* app.UseMvc(); */
-      app.UseRouting(); //If your app calls UseStaticFiles, place UseStaticFiles before UseRouting
+
+      app.UseRouting();
       app.UseAuthorization();
-      app.UseEndpoints(endpoints =>
-          {
-          endpoints.MapControllerRoute(
-              name: "default",
-              pattern: "{controller=Home}/{action=Index}/{id?}");
-          });
+      app.AddEndpoints();
 
     }
     private static void RegisterServices(IServiceCollection services)
