@@ -6,11 +6,9 @@ using Project.Data;
 using ProjectAPI.Ioc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ProjectAPI.Identity.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Hosting;
 
@@ -41,41 +39,15 @@ namespace ProjectAPI
 
       services.AddAutoMapper();
 
-      services.AddSwaggerGen(c =>
-          {
-          c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" });
-          });
+      services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" }); });
 
-      services.AddAuthorization(options =>
-          {
-          // options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Alice Smith")));
-          // options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Bob Smith")));
-          // options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Eskinder")));
-          // options.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Kukusha")));
-          // options.AddPolicy("CanRemoveCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("Customers", "Remove")));
-          // options.AddPolicy("IsAdmin", policy => policy.Requirements.Add(new RoleClaimRequirement("Admin")));
-          options.AddPolicy("CanWrite", policy => policy.Requirements.Add(new RoleClaimRequirement("Write")));
-          options.AddPolicy("CanRead", policy => policy.Requirements.Add(new RoleClaimRequirement("Read")));
-          });
+      services.AddAuthorizationConfiguration();
 
-      services.AddAuthentication(options =>
-          {
-          options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-          options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-          }).AddJwtBearer(o =>
-            {
-            o.Authority            = config.IdentityServer.Authority;
-            o.Audience             = config.IdentityServer.Audience;
-            o.RequireHttpsMetadata = config.IdentityServer.RequireHttpsMetadata;
-            o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters {ValidAudiences = new string[] {"master-realm", "account", "api2"}};
-            });
+      services.AddAuthenticationConfiguration()
+      .AddJwtBearerConfiguration(config.IdentityServer.Authority,config.IdentityServer.Audience,config.IdentityServer.RequireHttpsMetadata);
 
       RegisterServices(services);
 
-      /* services.AddMvc(options => */
-      /*     { */
-      /*     options.Filters.Add(typeof(ValidateModelStateAttribute)); */
-      /*     }); */
       services.AddControllers();
 
     }
