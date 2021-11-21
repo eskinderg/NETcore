@@ -5,7 +5,7 @@ namespace Project.Infra
 {
   public class UnitOfWork: IUnitOfWork
   {
-    public AppDbContext Context        { get; }
+    protected AppDbContext Context        { get; }
     public ICategoryService Categories { get; private set; }
     public IFolderService Folders      { get; private set; }
     public IContentService Contents    { get; private set; }
@@ -18,10 +18,10 @@ namespace Project.Infra
         ICategoryService categories,
         IEventService    events,
         INoteService     notes,
-        AppDbContext     context
+        AppDbContext     _context
         )
     {
-      Context    = context;
+      Context    = _context;
       Categories = categories;
       Folders    = folders;
       Contents   = contents;
