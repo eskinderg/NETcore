@@ -1,4 +1,3 @@
-
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,6 @@ namespace ProjectAPI.Identity.Authorization
             {
                 throw new ArgumentNullException(nameof(services));
             }
-
 
             return services.AddAuthorization((Action<AuthorizationOptions>)(o =>
                         {
