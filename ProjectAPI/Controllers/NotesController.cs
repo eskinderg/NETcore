@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Project.Infra;
 using AutoMapper;
 using Project.Model.Models;
+using ProjectAPI.Identity.Authorization;
 
 namespace ProjectAPI.Controllers
 {
@@ -23,6 +24,7 @@ namespace ProjectAPI.Controllers
     [Authorize(Policy = "CanWrite")]
     public JsonResult Post([FromBody]Note model)
     {
+      model.UserId = User.GetLoggedInUserId<string>();
       if (ModelState.IsValid)
       {
         UnitOfWork.Notes.Add(model);

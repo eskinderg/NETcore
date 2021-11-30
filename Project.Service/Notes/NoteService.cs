@@ -9,7 +9,7 @@ namespace Project.Services
   public class NoteService: INoteService
   {
     public IRepository<Note> NoteRepository { get; }
-    public IEnumerable<Note> AllNotes => NoteRepository.Table.ToList();
+    public IEnumerable<Note> AllNotes => NoteRepository.Table.OrderByDescending(n => n.Id);
     public NoteService(IRepository<Note> eventRepo) => NoteRepository = eventRepo;
 
     public Note Add(Note e)
