@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Project.Model;
 
 namespace Project.Data
 {
-  public interface IRepository<T> where T : BaseEntity
+  public interface IRepository<T>: IDisposable where T : BaseEntity
   {
 
     T GetById(params object[] id);

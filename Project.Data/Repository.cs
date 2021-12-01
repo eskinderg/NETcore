@@ -77,6 +77,11 @@ namespace Project.Data
       get { return _entities ?? (_entities = Context.Set<T>()); }
     }
 
+    public void Dispose()
+    {
+      Context?.Dispose();
+    }
+
   }
 
 }
