@@ -1,4 +1,11 @@
 version: 2.1
+deployment:
+  staging:
+    branch: master
+    commands:
+      - git remote add heroku git@heroku.com:herokuapplicationname.git
+      - "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
+      - cd ../../.. && git subtree push --prefix GitHubPath/to/application heroku master
 orbs:
   heroku: circleci/heroku@1.2.6
   windows: circleci/windows@2.4.1
@@ -10,14 +17,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys:
-            - dotnet-packages-v1-{{ checksum "demoDotnet.csproj" }}
+        keys:
+          - dotnet-packages-v1-{{ checksum "demoDotnet.csproj" }}
       - run:
-          name: "Install project dependencies"
-          command: dotnet.exe restore
+        name: "Install project dependencies"
+        command: dotnet.exe restore
       - run:
-          name: "Build Application according to some given configuration"
-          command: dotnet.exe build --configuration Release
+        name: "Build Application according to some given configuration"
+        command: dotnet.exe build --configuration Release
 workflows:
   heroku_deploy:
     jobs:
