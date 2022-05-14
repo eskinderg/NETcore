@@ -21,5 +21,19 @@ namespace Project.Data.Mapping
       builder.ToTable("Categories");
     }
 
+    void IEntityTypeConfiguration<Category>.Configure(EntityTypeBuilder<Category> builder)
+    {
+      //Primary Key
+      builder.HasKey(c => c.Id);
+
+      //Properties
+      builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
+      builder.Property(c => c.Name).HasColumnName("Name").IsRequired().HasMaxLength(50);
+      builder.Property(c => c.SubCategoryId).HasColumnName("SubCategory_Id");/*.IsOptional();*/
+      //builder.HasOptional(c => c.SubCategory);
+
+      //Table & Column Mapping
+      builder.ToTable("Categories");
+    }
   }
 }

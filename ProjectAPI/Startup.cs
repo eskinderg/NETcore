@@ -25,9 +25,14 @@ namespace ProjectAPI
       var config = Configuration.GetSection("ApplicationSettings").Get<AppSettings>();
 
       services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
-      services.AddDbContext<AppDbContext>(options => options.UseMySql(config.DbConnectionString, b => b.MigrationsAssembly("ProjectAPI")));
+      // services.AddDbContext<AppDbContext>(options => options.UseMySql(config.DbConnectionString, b => b.MigrationsAssembly("ProjectAPI")));
+      
+      services.AddDbContext<AppDbContext>(
+        options => options.UseMySql(config.DbConnectionString, ServerVersion.AutoDetect(config.DbConnectionString))
+      );
+      
       services.AddApiVersioningConfiguration(config.Api.VersionReader, config.Api.AssumeDefaultVersionWhenUnspecified);
-      services.AddAutoMapper();
+      // services.AddAutoMapper();
       services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" }); });
       services.AddAuthorizationConfiguration();
 

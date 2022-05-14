@@ -8,6 +8,7 @@ using ProjectAPI.Identity.Authorization;
 using Project.Infra;
 using ProjectAPI.Services;
 using ProjectAPI.Authorization;
+using Project.AutoMapper;
 
 namespace ProjectAPI.Ioc
 {
@@ -27,12 +28,17 @@ namespace ProjectAPI.Ioc
       /* services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); ; */
       services.AddSingleton<IAuthorizationHandler, RoleClaimRequirmentHandler>(); ;
 
-      // Application
-      services.AddSingleton(Mapper.Configuration);
-
-      services.AddScoped<IMapper>(
-          sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService)
-          );
+            // Application
+            // services.AddSingleton(Mapper.Configuration);
+      AutoMapper.IConfigurationProvider config = new MapperConfiguration(cfg =>
+          {
+          cfg.AddProfile<MappingProfile>();
+          });
+      // services.AddScoped<IMapper>(
+      //     sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService)
+      //     );
+      services.AddSingleton(config);
+      services.AddScoped<IMapper, Mapper>();
       // services.AddScoped<ICustomerAppService, CustomerAppService>();
 
       // Domain - Events

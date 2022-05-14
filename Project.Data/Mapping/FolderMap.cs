@@ -26,5 +26,26 @@ namespace Project.Data.Mapping
       //    .HasForeignKey(f=>f.ParentId)
       //    .WillCascadeOnDelete(false);
     }
-  }
+
+        void IEntityTypeConfiguration<Folder>.Configure(EntityTypeBuilder<Folder> builder)
+        {
+            //Primary Key
+            builder.HasKey(c => c.Id);
+
+            //Properties
+
+
+            //Table & Column Mapping
+            builder.ToTable("content_folder_tbl");
+
+            builder.Property(c => c.Id).HasColumnName("folder_id");
+            builder.Property(c => c.ParentId).HasColumnName("parent_id");
+            builder.Property(c => c.Name).HasColumnName("folder_name");
+
+            //HasOptional(f=>f.Parent)
+            //    .WithMany(f=>f.Children)
+            //    .HasForeignKey(f=>f.ParentId)
+            //    .WillCascadeOnDelete(false);
+        }
+    }
 }

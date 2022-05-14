@@ -18,7 +18,7 @@ namespace Project.Data
     {
       base.OnModelCreating(modelBuilder);
 
-      var mappingInterface = typeof(IEntityTypeConfiguration<>);
+      var mappingInterface = typeof(IEntityTypeConfiguration<BaseEntity>);
 
       var mappingTypes = typeof(AppDbContext).GetTypeInfo().Assembly.GetTypes()
         .Where(x => x.GetInterfaces().Any(y => y.GetTypeInfo().IsGenericType && y.GetGenericTypeDefinition() == mappingInterface));
