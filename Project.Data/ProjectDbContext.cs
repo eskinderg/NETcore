@@ -18,24 +18,16 @@ namespace Project.Data
     {
       base.OnModelCreating(modelBuilder);
 
-      var mappingInterface = typeof(IEntityTypeConfiguration<BaseEntity>);
+      var implementedConfigTypes = Assembly.GetExecutingAssembly()
+        .GetTypes().Where(t => !t.IsAbstract
+            && !t.IsGenericTypeDefinition
+            && t.GetTypeInfo().ImplementedInterfaces.Any(i =>
+              i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
 
-      var mappingTypes = typeof(AppDbContext).GetTypeInfo().Assembly.GetTypes()
-        .Where(x => x.GetInterfaces().Any(y => y.GetTypeInfo().IsGenericType && y.GetGenericTypeDefinition() == mappingInterface));
-
-      var entityMethod = typeof(ModelBuilder).GetMethods()
-        .Single(x => x.Name == "Entity" &&
-            x.IsGenericMethod &&
-            x.ReturnType.Name == "EntityTypeBuilder`1");
-
-      foreach (var mappingType in mappingTypes)
+      foreach (var configType in implementedConfigTypes)
       {
-        var genericTypeArg      = mappingType.GetInterfaces().Single().GenericTypeArguments.Single();
-        var genericEntityMethod = entityMethod.MakeGenericMethod(genericTypeArg);
-        var entityBuilder       = genericEntityMethod.Invoke(modelBuilder, null);
-        var mapper              = Activator.CreateInstance(mappingType);
-
-        mapper.GetType().GetMethod("Map").Invoke(mapper, new[] { entityBuilder });
+        dynamic config = Activator.CreateInstance(configType);
+        modelBuilder.ApplyConfiguration(config);
       }
     }
 
