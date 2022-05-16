@@ -12,23 +12,17 @@ namespace Project.Data
   {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
 
-    public new DbSet<TEntity> Set<TEntity>() where TEntity : BaseEntity => base.Set<TEntity>();
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
 
-      var implementedConfigTypes = Assembly.GetExecutingAssembly()
-        .GetTypes().Where(t => !t.IsAbstract
-            && !t.IsGenericTypeDefinition
-            && t.GetTypeInfo().ImplementedInterfaces.Any(i =>
-              i.GetTypeInfo().IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
-
-      foreach (var configType in implementedConfigTypes)
-      {
-        dynamic config = Activator.CreateInstance(configType);
-        modelBuilder.ApplyConfiguration(config);
-      }
+      //Registering dynamically all mappings that implement IEntityTypeConfiguration 
+      modelBuilder.ApplyConfigurationsFromAssembly(
+          Assembly.GetExecutingAssembly(), 
+          t => t.GetInterfaces().Any(i => 
+            i.IsGenericType &&
+            i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>) &&
+            typeof(BaseEntity).IsAssignableFrom(i.GenericTypeArguments[0])));
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
