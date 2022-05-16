@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http;
 using Project.Data;
 using Project.Services;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectAPI.Identity.Authorization;
 using Project.Infra;
 using ProjectAPI.Services;
 using ProjectAPI.Authorization;
@@ -28,12 +27,11 @@ namespace ProjectAPI.Ioc
       /* services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); ; */
       services.AddSingleton<IAuthorizationHandler, RoleClaimRequirmentHandler>(); ;
 
-            // Application
-            // services.AddSingleton(Mapper.Configuration);
-      AutoMapper.IConfigurationProvider config = new MapperConfiguration(cfg =>
-          {
-          cfg.AddProfile<MappingProfile>();
-          });
+      // Application
+      // services.AddSingleton(Mapper.Configuration);
+      AutoMapper.IConfigurationProvider config = new MapperConfiguration(
+          cfg => { cfg.AddProfile<MappingProfile>(); }
+          );
       // services.AddScoped<IMapper>(
       //     sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService)
       //     );

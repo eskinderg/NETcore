@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 // using System.ComponentModel.DataAnnotations;
 
-
 namespace Project.Model
 {
   public class SubCategory
