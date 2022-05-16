@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Project.Data;
 using ProjectAPI.Ioc;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 using ProjectAPI.Identity.Authorization;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Hosting;

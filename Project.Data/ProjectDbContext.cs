@@ -5,8 +5,6 @@ using System.Reflection;
 using Project.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Project.Data.Mapping;
-using Project.Model.Models;
 
 namespace Project.Data
 {
