@@ -4,7 +4,7 @@ using Project.Model.Models;
 
 namespace Project.Data.Mapping
 {
-  public class EventMap: IEntityTypeConfiguration<Event>
+  public class EventMap : IEntityTypeConfiguration<Event>
   {
     public void Configure(EntityTypeBuilder<Event> builder)
     {

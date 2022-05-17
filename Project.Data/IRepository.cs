@@ -5,7 +5,7 @@ using Project.Model;
 
 namespace Project.Data
 {
-  public interface IRepository<T>: IDisposable where T : BaseEntity
+  public interface IRepository<T> : IDisposable where T : BaseEntity
   {
 
     T GetById(params object[] id);

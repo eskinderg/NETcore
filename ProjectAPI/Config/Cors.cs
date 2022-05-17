@@ -4,22 +4,22 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace ProjectAPI
 {
-    public static class Cors
+  public static class Cors
+  {
+    public static IApplicationBuilder AddCorsConfiguration(this IApplicationBuilder builder)
     {
-        public static IApplicationBuilder AddCorsConfiguration(this IApplicationBuilder builder)
-        {
-            if (builder == null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+      if (builder == null)
+      {
+        throw new ArgumentNullException(nameof(builder));
+      }
 
-            return builder.UseCors((Action<CorsPolicyBuilder>)(c =>
-                        {
-                        c.AllowAnyMethod();
-                        c.AllowAnyHeader();
-                        c.AllowAnyOrigin();
-                        }));
-        }
+      return builder.UseCors((Action<CorsPolicyBuilder>)(c =>
+                  {
+                    c.AllowAnyMethod();
+                    c.AllowAnyHeader();
+                    c.AllowAnyOrigin();
+                  }));
     }
+  }
 
 }

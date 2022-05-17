@@ -5,7 +5,7 @@ using Project.Model.Models;
 
 namespace Project.Data.Mapping
 {
-  public class NoteMap: IEntityTypeConfiguration<Note>
+  public class NoteMap : IEntityTypeConfiguration<Note>
   {
     public void Configure(EntityTypeBuilder<Note> builder)
     {

@@ -10,7 +10,7 @@ namespace Project.Data
 {
   public class AppDbContext : DbContext
   {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -18,8 +18,8 @@ namespace Project.Data
 
       //Registering dynamically all mappings that implement IEntityTypeConfiguration 
       modelBuilder.ApplyConfigurationsFromAssembly(
-          Assembly.GetExecutingAssembly(), 
-          t => t.GetInterfaces().Any(i => 
+          Assembly.GetExecutingAssembly(),
+          t => t.GetInterfaces().Any(i =>
             i.IsGenericType &&
             i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>) &&
             typeof(BaseEntity).IsAssignableFrom(i.GenericTypeArguments[0])));

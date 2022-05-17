@@ -13,10 +13,12 @@ namespace ProjectAPI
 {
   public class Startup
   {
+
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
     }
+
     public IConfiguration Configuration { get; }
 
     public void ConfigureServices(IServiceCollection services)
@@ -24,27 +26,31 @@ namespace ProjectAPI
       var config = Configuration.GetSection("ApplicationSettings").Get<AppSettings>();
 
       services.Configure<AppSettings>(Configuration.GetSection("ApplicationSettings"));
-      // services.AddDbContext<AppDbContext>(options => options.UseMySql(config.DbConnectionString, b => b.MigrationsAssembly("ProjectAPI")));
 
       services.AddDbContext<AppDbContext>(
           options => options.UseMySql(config.DbConnectionString, ServerVersion.AutoDetect(config.DbConnectionString))
           );
 
       services.AddApiVersioningConfiguration(config.Api.VersionReader, config.Api.AssumeDefaultVersionWhenUnspecified);
-      // services.AddAutoMapper();
+
       services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" }); });
+
       services.AddAuthorizationConfiguration();
 
       services.AddAuthenticationConfiguration()
-        .AddJwtBearerConfiguration(config.IdentityServer.Authority,config.IdentityServer.Audience,config.IdentityServer.RequireHttpsMetadata);
+        .AddJwtBearerConfiguration(
+            config.IdentityServer.Authority, config.IdentityServer.Audience, config.IdentityServer.RequireHttpsMetadata
+            );
 
       RegisterServices(services);
+
       services.AddControllers();
 
     }
 
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
+
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
@@ -59,13 +65,17 @@ namespace ProjectAPI
       app.UseSwagger();
 
       app.UseRouting();
+
       app.UseAuthorization();
+
       app.AddEndpoints();
 
     }
+
     private static void RegisterServices(IServiceCollection services)
     {
       NativeInjectorBootStrapper.RegisterServices(services);
     }
+
   }
 }

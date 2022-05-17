@@ -14,17 +14,20 @@ public class IdentityServer
   public bool RequireHttpsMetadata { get; set; }
 }
 
-public class Api {
+public class Api
+{
   public string VersionReader                     { get; set; }
   public bool AssumeDefaultVersionWhenUnspecified { get; set; } = true;
 }
 
-public class MoviesApi {
+public class MoviesApi
+{
   public string Url { get; set; }
   public string Key { get; set; }
 }
 
-public class Auth0 {
+public class Auth0
+{
   public string Domain        { get; set; }
   public string ApiIdentifier { get; set; }
 }

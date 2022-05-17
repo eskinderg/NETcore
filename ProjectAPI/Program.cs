@@ -8,7 +8,7 @@ namespace ProjectAPI
     public static void Main(string[] args)
     {
       /* BuildWebHost(args).Run(); */
-      CreateWebHostBuilder(args).Build().Run(); 
+      CreateWebHostBuilder(args).Build().Run();
     }
 
     public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
