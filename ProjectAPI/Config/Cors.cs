@@ -14,11 +14,11 @@ namespace ProjectAPI
       }
 
       return builder.UseCors((Action<CorsPolicyBuilder>)(c =>
-                  {
-                    c.AllowAnyMethod();
-                    c.AllowAnyHeader();
-                    c.AllowAnyOrigin();
-                  }));
+      {
+        c.AllowAnyMethod();
+        c.AllowAnyHeader();
+        c.AllowAnyOrigin();
+      }));
     }
   }
 

@@ -15,14 +15,13 @@ namespace ProjectAPI.Controllers
     public NotesController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
     [HttpGet]
-    // [Authorize(Policy = "CanWriteCustomerData")]
-      [Authorize(Policy = "CanRead")]
-      public JsonResult Get() => Json(UnitOfWork.Notes.AllNotes);
+    [Authorize(Policy = "CanRead")]
+    public JsonResult Get() => Json(UnitOfWork.Notes.AllNotes);
 
     // POST api/notes
     [HttpPost]
     [Authorize(Policy = "CanWrite")]
-    public JsonResult Post([FromBody]Note model)
+    public JsonResult Post([FromBody] Note model)
     {
       model.UserId = User.GetLoggedInUserId<string>();
       if (ModelState.IsValid)
@@ -51,10 +50,9 @@ namespace ProjectAPI.Controllers
     }
 
     // PUT api/notes/
-    // [HttpPut("{id}")]
     [HttpPut]
     [Authorize(Policy = "CanWrite")]
-    public JsonResult Put([FromBody]Note model)
+    public JsonResult Put([FromBody] Note model)
     {
       var updated = UnitOfWork.Notes.Update(model);
       UnitOfWork.Save();

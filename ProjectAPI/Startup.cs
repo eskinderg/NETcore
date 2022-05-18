@@ -33,7 +33,10 @@ namespace ProjectAPI
 
       services.AddApiVersioningConfiguration(config.Api.VersionReader, config.Api.AssumeDefaultVersionWhenUnspecified);
 
-      services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" }); });
+      services.AddSwaggerGen(c =>
+      {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Content API", Version = "v1" });
+      });
 
       services.AddAuthorizationConfiguration();
 
@@ -60,7 +63,10 @@ namespace ProjectAPI
 
       app.UseAuthentication();
 
-      app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contents API V1"); });
+      app.UseSwaggerUI(c =>
+      {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contents API V1");
+      });
 
       app.UseSwagger();
 

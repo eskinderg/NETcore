@@ -26,9 +26,8 @@ namespace ProjectAPI.Identity.Authorization
       return context.Response.WriteAsync(payload.ToString());
     }
 
-    public override Task AuthenticationFailed(AuthenticationFailedContext context)
-    {
-      return base.AuthenticationFailed(context);
-    }
+    public override Task AuthenticationFailed(AuthenticationFailedContext context) =>
+      base.AuthenticationFailed(context);
+
   }
 }
