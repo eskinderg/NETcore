@@ -5,7 +5,7 @@ namespace Project.Infra
 {
   public class UnitOfWork: IUnitOfWork
   {
-    protected AppDbContext Context        { get; }
+    protected AppDbContext Context     { get; }
     public ICategoryService Categories { get; private set; }
     public IFolderService Folders      { get; private set; }
     public IContentService Contents    { get; private set; }

@@ -3,7 +3,7 @@ using Project.Model.Models;
 
 namespace Project.Services
 {
-  public interface IFolderService
+  public interface IFolderService : IService<Folder>
   {
     IEnumerable<Folder> GetAllFolders();
 

@@ -3,7 +3,7 @@ using Project.Model;
 
 namespace Project.Services
 {
-  public interface IExpenseService
+  public interface IExpenseService : IService<Expense>
   {
     Expense GetById(int id);
 

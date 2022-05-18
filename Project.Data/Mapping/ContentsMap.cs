@@ -12,8 +12,6 @@ namespace Project.Data.Mapping
       //HasKey(c => c.Id);
 
       //Properties
-
-      //Table & Column Mapping
       builder.ToTable("content");
       builder.Property(c => c.Id).HasColumnName("content_id").IsRequired();
       builder.Property(c => c.Title).HasColumnName("content_title");

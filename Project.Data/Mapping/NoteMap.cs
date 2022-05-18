@@ -13,10 +13,6 @@ namespace Project.Data.Mapping
       builder.HasKey(c => c.Id);
 
       //Properties
-
-      //Table & Column Mapping
-      builder.ToTable("note_tbl");
-
       builder.Property(c => c.Id).HasColumnName("note_id");
       builder.Property(c => c.UserId).HasColumnName("user_id");
       builder.Property(c => c.Height).HasColumnName("height");
@@ -26,6 +22,9 @@ namespace Project.Data.Mapping
       builder.Property(c => c.Colour).HasColumnName("colour");
       builder.Property(c => c.Text).HasColumnName("text");
       builder.Property(c => c.Header).HasColumnName("header");
+
+      //Table & Column Mapping
+      builder.ToTable("note_tbl");
     }
   }
 }

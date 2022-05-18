@@ -3,7 +3,7 @@ using Project.Model.Models;
 
 namespace Project.Services
 {
-  public interface IContentService
+  public interface IContentService : IService<Content>
   {
     IEnumerable<Content> AllContents { get; }
 

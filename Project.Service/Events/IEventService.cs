@@ -4,7 +4,7 @@ using Project.Model.Models;
 
 namespace Project.Services
 {
-  public interface IEventService
+  public interface IEventService : IService<Event>
   {
     IEnumerable<Event> AllEvents { get; }
     Event GetEventById(int id, string userId);

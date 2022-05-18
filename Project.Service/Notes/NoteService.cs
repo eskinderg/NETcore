@@ -3,32 +3,31 @@ using Project.Model.Models;
 using Project.Data;
 using System.Linq;
 
-
 namespace Project.Services
 {
-  public class NoteService: INoteService
+  public class NoteService : INoteService
   {
-    public IRepository<Note> NoteRepository { get; }
-    public IEnumerable<Note> AllNotes => NoteRepository.Table.OrderByDescending(n => n.Id);
-    public NoteService(IRepository<Note> eventRepo) => NoteRepository = eventRepo;
+    public IRepository<Note> Repository { get; }
+    public IEnumerable<Note> AllNotes => Repository.Table.OrderByDescending(n => n.Id);
+    public NoteService(IRepository<Note> repository) => Repository = repository;
 
     public Note Add(Note e)
     {
-      NoteRepository.Insert(e);
+      Repository.Insert(e);
       return e;
     }
 
     public Note Update(Note e)
     {
-      NoteRepository.Update(e);
+      Repository.Update(e);
       return e;
     }
 
-    public Note GetNoteById(int id) => NoteRepository.GetById(id);
+    public Note GetNoteById(int id) => Repository.GetById(id);
 
     public Note Delete(Note e)
     {
-      NoteRepository.Delete(e);
+      Repository.Delete(e);
       return e;
     }
   }

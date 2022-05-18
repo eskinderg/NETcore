@@ -3,7 +3,7 @@ using Project.Model.Models;
 
 namespace Project.Services
 {
-  public interface ICategoryService
+  public interface ICategoryService : IService<Category>
   {
     IEnumerable<Category> AllCategories { get; }
   }

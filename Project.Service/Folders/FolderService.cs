@@ -7,21 +7,21 @@ namespace Project.Services
 {
   public class FolderService : IFolderService
   {
-    public IRepository<Folder> FolderRepository { get; }
+    public IRepository<Folder> Repository { get; }
 
-    public FolderService(IRepository<Folder> folderRepository) => FolderRepository = folderRepository;
+    public FolderService(IRepository<Folder> repository) => Repository = repository;
 
-    public IEnumerable<Folder> GetAllFolders() => FolderRepository.Table.ToList();
+    public IEnumerable<Folder> GetAllFolders() => Repository.Table.ToList();
 
-    public Folder GetFolder(string name) => FolderRepository.Table.FirstOrDefault(f => f.Name == name);
+    public Folder GetFolder(string name) => Repository.Table.FirstOrDefault(f => f.Name == name);
 
-    public Folder GetFolder(int id) => FolderRepository.GetById(id);
+    public Folder GetFolder(int id) => Repository.GetById(id);
 
     public IEnumerable<Folder> RootFolders
     {
       get
       {
-        return FolderRepository.Table.Where(f => f.Name == null).ToList();
+        return Repository.Table.Where(f => f.Name == null).ToList();
       }
     }
   }

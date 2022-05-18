@@ -9,32 +9,32 @@ namespace Project.Services
 {
   public class EventService : IEventService
   {
-    public IRepository<Event> EventRepository { get; }
-    public IEnumerable<Event> AllEvents => EventRepository.Table.ToList();
+    public IRepository<Event> Repository { get; }
+    public IEnumerable<Event> AllEvents => Repository.Table.ToList();
 
-    public EventService(IRepository<Event> eventRepo) => EventRepository = eventRepo;
+    public EventService(IRepository<Event> repository) => Repository = repository;
 
     public Event Add(Event e)
     {
-      EventRepository.Insert(e);
+      Repository.Insert(e);
       return e;
     }
 
     public Event Update(Event e)
     {
-      EventRepository.Update(e);
+      Repository.Update(e);
       return e;
     }
 
-    public Event GetEventById(int id, string userId) => EventRepository.GetById(id, userId);
+    public Event GetEventById(int id, string userId) => Repository.GetById(id, userId);
 
     public Event Delete(Event e)
     {
-      EventRepository.Delete(e);
+      Repository.Delete(e);
       return e;
     }
 
     public IEnumerable<Event> GetEventsByUserId (string userid) => 
-      EventRepository.Table.Where(e => e.UserID == userid);
+      Repository.Table.Where(e => e.UserID == userid);
   }
 }

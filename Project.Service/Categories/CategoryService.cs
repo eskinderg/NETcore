@@ -7,10 +7,10 @@ namespace Project.Services
 {
   public class CategoryService : ICategoryService
   {
-    public IRepository<Category> CategoryRepository { get; }
+    public IRepository<Category> Repository { get; }
 
-    public CategoryService(IRepository<Category> categoryRepository) => CategoryRepository = categoryRepository;
+    public CategoryService(IRepository<Category> repository) => Repository = repository;
 
-    public IEnumerable<Category> AllCategories => CategoryRepository.Table.ToList();
+    public IEnumerable<Category> AllCategories => Repository.Table.ToList();
   }
 }

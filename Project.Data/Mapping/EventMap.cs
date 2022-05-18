@@ -11,11 +11,10 @@ namespace Project.Data.Mapping
       //Primary Key
       builder.HasKey(c => new { c.Id, c.UserID });
 
-      //Properties
-
       //Table & Column Mapping
       builder.ToTable("event_tbl");
 
+      //Properties
       builder.Property(c => c.Id).HasColumnName("event_id");
       builder.Property(c => c.Complete).HasColumnName("complete");
       builder.Property(c => c.Title).HasColumnName("title");
