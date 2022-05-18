@@ -11,14 +11,13 @@ namespace ProjectAPI.Identity.Authorization
     public static AuthenticationBuilder AddJwtBearerConfiguration(this AuthenticationBuilder builder, string issuer, string audience, bool requireHttps)
     {
       return builder.AddJwtBearer(options =>
-              {
-                options.Authority = issuer;
-                options.Audience = audience;
-                options.RequireHttpsMetadata = requireHttps;
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters { ValidAudiences = new string[] { "master-realm", "account", "api2" } };
-                options.Events = new ProjectJwtBearerEvents();
-
-              });
+      {
+        options.Authority = issuer;
+        options.Audience = audience;
+        options.RequireHttpsMetadata = requireHttps;
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters { ValidAudiences = new string[] { "master-realm", "account", "api2" } };
+        options.Events = new ProjectJwtBearerEvents();
+      });
     }
 
     public static AuthenticationBuilder AddAuthenticationConfiguration(this IServiceCollection services)
