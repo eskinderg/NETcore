@@ -15,8 +15,11 @@ namespace ProjectAPI.Identity.Authorization
         options.Authority = issuer;
         options.Audience = audience;
         options.RequireHttpsMetadata = requireHttps;
-        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters { ValidAudiences = new string[] { "master-realm", "account", "api2" } };
         options.Events = new ProjectJwtBearerEvents();
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+          ValidAudiences = new string[] { "master-realm", "account", "api2" }
+        };
       });
     }
 
