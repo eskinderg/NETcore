@@ -1,18 +1,60 @@
-﻿using Microsoft.AspNetCore;
+﻿using ProjectAPI;
+using Project.Data;
+using ProjectAPI.Ioc;
+using ProjectAPI.Identity.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace ProjectAPI
-{
-  public class Program
-  {
-    public static void Main(string[] args)
+var builder = WebApplication.CreateBuilder(args);
+
+ConfigurationManager configuration = builder.Configuration;
+
+var config = configuration.GetSection("ApplicationSettings").Get<AppSettings>();
+
+builder.Services.Configure<AppSettings>(configuration.GetSection("ApplicationSettings"));
+
+builder.Services.AddDbContext<AppDbContext>(
+    options =>
     {
-      /* BuildWebHost(args).Run(); */
-      CreateWebHostBuilder(args).Build().Run();
-    }
+      options.UseMySql(config.DbConnectionString, ServerVersion.AutoDetect(config.DbConnectionString));
+    });
 
-    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-      WebHost.CreateDefaultBuilder(args)
-      .UseStartup<Startup>();
-  }
+builder.Services.AddApiVersioningConfiguration(config.Api.VersionReader, config.Api.AssumeDefaultVersionWhenUnspecified);
+
+builder.Services.AddAuthorizationConfiguration();
+
+builder.Services.AddAuthenticationConfiguration()
+  .AddJwtBearerConfiguration(
+      config.IdentityServer.Authority, config.IdentityServer.Audience, config.IdentityServer.RequireHttpsMetadata
+      );
+
+NativeInjectorBootStrapper.RegisterServices(builder.Services);
+
+builder.Services.AddControllers();
+
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+
+  app.UseSwagger();
+
+  app.UseSwaggerUI();
+
 }
+
+app.AddCorsConfiguration();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
