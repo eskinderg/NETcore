@@ -40,7 +40,7 @@ namespace ProjectAPI.Controllers
 
     // DELETE api/notes/5
     [HttpDelete("{id}")]
-    [Authorize(Policy = "CanRead")]
+    [Authorize(Policy = "CanWrite")]
     public JsonResult Delete(int id)
     {
       var evnt = UnitOfWork.Notes.GetNoteById(id);
