@@ -18,7 +18,7 @@ namespace ProjectAPI.Controllers
   [ApiVersion("1.0")]
   public class ContentsController : Controller
   {
-    public IMapper Mapper          { get;}
+    public IMapper     Mapper      { get;}
     public IUnitOfWork UnitOfWork  { get; }
     public AppSettings AppSettings { get; set; }
 

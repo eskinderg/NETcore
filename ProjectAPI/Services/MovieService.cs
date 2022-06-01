@@ -10,11 +10,13 @@ namespace ProjectAPI.Services
 {
   public class MovieService : IMovieService
   {
+
     private readonly IOptionsSnapshot<AppSettings> _settings;
-    private readonly HttpClient _apiClient;
-    private readonly IHttpContextAccessor _httpContextAccesor;
-    private static HttpClient client = new HttpClient();
-    private readonly string _remoteServiceBaseUrl;
+    private readonly HttpClient                    _apiClient;
+    private readonly IHttpContextAccessor          _httpContextAccesor;
+    private static   HttpClient                    client = new HttpClient();
+    private readonly string                        _remoteServiceBaseUrl;
+
     public MovieService(IOptionsSnapshot<AppSettings> settings, HttpClient httpClient, IHttpContextAccessor httpContextAccesor)
     {
       _settings             = settings;

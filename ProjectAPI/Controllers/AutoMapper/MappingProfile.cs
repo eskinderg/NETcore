@@ -8,10 +8,10 @@ namespace Project.AutoMapper
   {
     public MappingProfile()
     {
-      CreateMap<Content, ContentViewModel>();
-      CreateMap<Folder, FolderViewModel>();
+      CreateMap<Content,  ContentViewModel>();
+      CreateMap<Folder,   FolderViewModel>();
       CreateMap<Category, CategoryViewModel>();
-      CreateMap<Event, EventViewModel>();
+      CreateMap<Event,    EventViewModel>();
     }
   }
 }

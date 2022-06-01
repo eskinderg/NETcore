@@ -9,12 +9,12 @@ namespace ProjectAPI.Helpers
 {
   public class HttpRequestBuilder
   {
-    private HttpMethod method   = null;
-    private string requestUri   = "";
-    private HttpContent content = null;
-    private string bearerToken  = "";
-    private string acceptHeader = "application/json";
-    private TimeSpan timeout    = new TimeSpan(0, 0, 15);
+    private HttpMethod  method       = null;
+    private string      requestUri   = "";
+    private HttpContent content      = null;
+    private string      bearerToken  = "";
+    private string      acceptHeader = "application/json";
+    private TimeSpan    timeout      = new TimeSpan(0, 0, 15);
 
     public HttpRequestBuilder()
     {

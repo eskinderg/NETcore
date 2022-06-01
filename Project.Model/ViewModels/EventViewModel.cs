@@ -6,11 +6,9 @@ namespace Project.Model.ViewModels
 {
   public class EventViewModel
   {
-    public int Id         { get; set; }
-
-    public string Title   { get; set; }
-
-    public bool Complete  { get; set; }
+    public int    Id       { get; set; }
+    public string Title    { get; set; }
+    public bool   Complete { get; set; }
 
   }
 }

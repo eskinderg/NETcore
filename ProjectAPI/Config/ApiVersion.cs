@@ -16,11 +16,11 @@ namespace ProjectAPI
 
       return services.AddApiVersioning((Action<ApiVersioningOptions>)(o =>
       {
-        /* o.ApiVersionReader = new UrlSegmentApiVersionReader(); */
-        o.ApiVersionReader = new HeaderApiVersionReader(versionReader);
+        /* o.ApiVersionReader                 = new UrlSegmentApiVersionReader(); */
+        o.ApiVersionReader                    = new HeaderApiVersionReader(versionReader);
         o.AssumeDefaultVersionWhenUnspecified = assumeDefaultVersionWhenUnspecified;
-        o.DefaultApiVersion = new ApiVersion(1, 0);
-        o.ReportApiVersions = true;
+        o.DefaultApiVersion                   = new ApiVersion(1, 0);
+        o.ReportApiVersions                   = true;
       }));
     }
   }

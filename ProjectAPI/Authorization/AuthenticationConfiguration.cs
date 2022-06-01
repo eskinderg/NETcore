@@ -12,10 +12,10 @@ namespace ProjectAPI.Identity.Authorization
     {
       return builder.AddJwtBearer(options =>
       {
-        options.Authority = issuer;
-        options.Audience = audience;
+        options.Authority            = issuer;
+        options.Audience             = audience;
         options.RequireHttpsMetadata = requireHttps;
-        options.Events = new ProjectJwtBearerEvents();
+        options.Events               = new ProjectJwtBearerEvents();
       });
     }
 

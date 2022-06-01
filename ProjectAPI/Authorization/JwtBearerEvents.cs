@@ -15,13 +15,13 @@ namespace ProjectAPI.Identity.Authorization
 
       var payload = new JObject
       {
-        ["error"] = context.Error,
+        ["error"]             = context.Error,
         ["error_description"] = context.ErrorDescription,
-        ["error_uri"] = context.ErrorUri
+        ["error_uri"]         = context.ErrorUri
       };
 
       context.Response.ContentType = "application/json";
-      context.Response.StatusCode = 401;
+      context.Response.StatusCode  = 401;
 
       return context.Response.WriteAsync(payload.ToString());
     }
