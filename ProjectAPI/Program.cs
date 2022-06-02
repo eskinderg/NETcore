@@ -4,7 +4,6 @@ using ProjectAPI.Ioc;
 using ProjectAPI.Identity.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,11 +16,7 @@ var config = configuration.GetSection("ApplicationSettings").Get<AppSettings>();
 
 builder.Services.Configure<AppSettings>(configuration.GetSection("ApplicationSettings"));
 
-builder.Services.AddDbContext<AppDbContext>(
-    options =>
-    {
-      options.UseMySql(config.DbConnectionString, ServerVersion.AutoDetect(config.DbConnectionString));
-    });
+builder.Services.AddDbContext<AppDbContext>();
 
 builder.Services.AddApiVersioningConfiguration(config.Api.VersionReader, config.Api.AssumeDefaultVersionWhenUnspecified);
 
@@ -42,11 +37,8 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-
   app.UseSwagger();
-
   app.UseSwaggerUI();
-
 }
 
 app.AddCorsConfiguration();

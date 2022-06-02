@@ -27,14 +27,14 @@ namespace Project.Data
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      // get the configuration from the app settings
+
       var config = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
         .AddJsonFile("appsettings.json")
         .Build();
 
-      // define the database to use
-      // optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+      optionsBuilder.UseMySQL(config.GetConnectionString("DefaultConnection"));
+
     }
 
     public int ExecuteSqlCommand(string sql, bool doNotEnsureTransaction = false, int? timeout = null, params object[] parameters)
