@@ -67,7 +67,7 @@ namespace ProjectAPI.Controllers
       if (updated != null)
       {
         UnitOfWork.Save();
-        return Json(updated);
+        return Json(Mapper.Map<EventViewModel>(updated));
       }
       Response.StatusCode = StatusCodes.Status400BadRequest;
       return Json(model);
@@ -84,7 +84,7 @@ namespace ProjectAPI.Controllers
       if (updated != null)
       {
         UnitOfWork.Save();
-        return Json(updated);
+        return Json(Mapper.Map<EventViewModel>(updated));
       }
       Response.StatusCode = StatusCodes.Status400BadRequest;
       return Json(model);
