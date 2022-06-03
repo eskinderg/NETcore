@@ -1,13 +1,13 @@
+using Project.Infra;
+using ProjectAPI.Services;
+using Project.Data;
+using Project.Services;
+using ProjectAPI.Authorization;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Project.Data;
-using Project.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Project.Infra;
-using ProjectAPI.Services;
-using ProjectAPI.Authorization;
-using Project.AutoMapper;
+using System.Reflection;
 
 namespace ProjectAPI.Ioc
 {
@@ -24,20 +24,15 @@ namespace ProjectAPI.Ioc
       // services.AddScoped<IMediatorHandler, InMemoryBus>();
 
       // ASP.NET Authorization Polices
-      /* services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); ; */
+      /* services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); */
       services.AddSingleton<IAuthorizationHandler, RoleClaimRequirmentHandler>(); ;
 
-      // Application
-      // services.AddSingleton(Mapper.Configuration);
       AutoMapper.IConfigurationProvider config = new MapperConfiguration(
-          cfg => { cfg.AddProfile<MappingProfile>(); }
+          cfg => { cfg.AddMaps(Assembly.GetExecutingAssembly()); }
           );
-      // services.AddScoped<IMapper>(
-      //     sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService)
-      //     );
+
       services.AddSingleton(config);
       services.AddScoped<IMapper, Mapper>();
-      // services.AddScoped<ICustomerAppService, CustomerAppService>();
 
       // Domain - Events
       // services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
