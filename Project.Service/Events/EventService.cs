@@ -1,4 +1,4 @@
-/* using System; */
+using System;
 /* using Microsoft.EntityFrameworkCore; */
 using System.Collections.Generic;
 using Project.Model.Models;
@@ -26,7 +26,7 @@ namespace Project.Services
       return e;
     }
 
-    public Event GetEventById(int id, string userId) => Repository.GetById(id, userId);
+    public Event GetEventById(int id, Guid userId) => Repository.GetById(id, userId);
 
     public Event Delete(Event e)
     {
@@ -34,7 +34,7 @@ namespace Project.Services
       return e;
     }
 
-    public IEnumerable<Event> GetEventsByUserId (string userid) => 
+    public IEnumerable<Event> GetEventsByUserId (Guid userid) => 
       Repository.Table.Where(e => e.UserID == userid);
   }
 }

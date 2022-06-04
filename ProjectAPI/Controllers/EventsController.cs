@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Project.Infra;
@@ -22,7 +23,7 @@ namespace ProjectAPI.Controllers
     public JsonResult Get()
     {
       var events = Mapper.Map<IEnumerable<Event>, List<EventViewModel>>
-        (UnitOfWork.Events.GetEventsByUserId(User.GetLoggedInUserId<string>()));
+        (UnitOfWork.Events.GetEventsByUserId(User.GetLoggedInUserId<Guid>()));
       return Json(events);
     }
 
@@ -33,7 +34,7 @@ namespace ProjectAPI.Controllers
     {
       if (ModelState.IsValid)
       {
-        model.UserID = User.GetLoggedInUserId<string>();
+        model.UserID = User.GetLoggedInUserId<Guid>();
         UnitOfWork.Events.Add(model);
         UnitOfWork.Save();
         return Json(model);
@@ -44,14 +45,14 @@ namespace ProjectAPI.Controllers
     // GET api/events/5
     [HttpGet("{id}")]
     [Authorize(Policy = "CanRead")]
-    public JsonResult Get(int id) => Json(UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<string>()));
+    public JsonResult Get(int id) => Json(UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<Guid>()));
 
     // DELETE api/events/5
     [HttpDelete("{id}")]
     [Authorize(Policy = "CanWrite")]
     public JsonResult Delete(int id)
     {
-      var evnt = UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<string>());
+      var evnt = UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<Guid>());
       UnitOfWork.Events.Delete(evnt);
       UnitOfWork.Save();
       return Json(evnt);
@@ -62,7 +63,7 @@ namespace ProjectAPI.Controllers
     [Authorize(Policy = "CanWrite")]
     public JsonResult Put([FromBody] Event model)
     {
-      model.UserID = User.GetLoggedInUserId<string>();
+      model.UserID = User.GetLoggedInUserId<Guid>();
       var updated = UnitOfWork.Events.Update(model);
       if (updated != null)
       {
@@ -79,7 +80,7 @@ namespace ProjectAPI.Controllers
     public JsonResult Toggle([FromBody] Event model)
     {
       model.Complete = !model.Complete;
-      model.UserID = User.GetLoggedInUserId<string>();
+      model.UserID = User.GetLoggedInUserId<Guid>();
       var updated = UnitOfWork.Events.Update(model);
       if (updated != null)
       {

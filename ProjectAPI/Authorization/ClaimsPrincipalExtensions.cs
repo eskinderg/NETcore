@@ -16,6 +16,11 @@ namespace ProjectAPI.Identity.Authorization
       {
         return (T)Convert.ChangeType(loggedInUserId, typeof(T));
       }
+      else if (typeof(T) == typeof(Guid))
+      {
+        return (T)Convert.ChangeType(Guid.Parse(loggedInUserId), typeof(T));
+
+      }
       else if (typeof(T) == typeof(int) || typeof(T) == typeof(long))
       {
         return loggedInUserId != null ? (T)Convert.ChangeType(loggedInUserId, typeof(T)) : (T)Convert.ChangeType(0, typeof(T));

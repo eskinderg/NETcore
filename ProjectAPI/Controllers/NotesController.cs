@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Project.Infra;
@@ -23,7 +24,7 @@ namespace ProjectAPI.Controllers
     [Authorize(Policy = "CanWrite")]
     public JsonResult Post([FromBody] Note model)
     {
-      model.UserId = User.GetLoggedInUserId<string>();
+      model.UserId = User.GetLoggedInUserId<Guid>();
       if (ModelState.IsValid)
       {
         UnitOfWork.Notes.Add(model);
