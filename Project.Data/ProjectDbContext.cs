@@ -33,7 +33,7 @@ namespace Project.Data
         .AddJsonFile("appsettings.json")
         .Build();
 
-      optionsBuilder.UseMySQL(config.GetConnectionString("DefaultConnection"));
+      optionsBuilder.UseMySQL(config.GetSection("ApplicationSettings")["DbConnectionString"]);
 
     }
 
