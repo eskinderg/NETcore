@@ -26,7 +26,7 @@ namespace ProjectAPI.Identity.Authorization
 
       return services.AddAuthentication((Action<AuthenticationOptions>)(o =>
       {
-        o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        o.DefaultScheme          = JwtBearerDefaults.AuthenticationScheme;
         o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
       }));
     }
