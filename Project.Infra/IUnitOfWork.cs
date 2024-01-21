@@ -1,4 +1,5 @@
 using System;
+using Project.Data;
 using Project.Services;
 
 namespace Project.Infra
@@ -11,5 +12,6 @@ namespace Project.Infra
     IEventService    Events     { get; }
     INoteService     Notes      { get; }
     int              Save();
+    AppDbContext     AppDbContext {get;}
   }
 }

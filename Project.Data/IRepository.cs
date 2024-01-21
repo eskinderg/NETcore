@@ -10,17 +10,17 @@ namespace Project.Data
 
     T GetById(params object[] id);
 
-    void Insert(T entity);
+    T Insert(T entity);
 
-    void Insert(IEnumerable<T> entities);
+    IEnumerable<T> Insert(IEnumerable<T> entities);
 
-    void Update(T entity);
+    T Update(T entity);
 
-    void Update(IEnumerable<T> entities);
+    IEnumerable<T> Update(IEnumerable<T> entities);
 
-    void Delete(T entity);
+    T Delete(T entity);
 
-    void Delete(IEnumerable<T> entities);
+    IEnumerable<T> Delete(IEnumerable<T> entities);
 
     IQueryable<T> Table { get; }
 

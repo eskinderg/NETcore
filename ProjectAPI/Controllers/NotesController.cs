@@ -5,6 +5,10 @@ using Project.Infra;
 using AutoMapper;
 using Project.Model.Models;
 using ProjectAPI.Identity.Authorization;
+using System.Collections.Generic;
+using Project.Model.ViewModels;
+using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace ProjectAPI.Controllers
 {
@@ -15,9 +19,17 @@ namespace ProjectAPI.Controllers
   {
     public NotesController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
+    // GET api/notes
     [HttpGet]
     [Authorize(Policy = "CanRead")]
-    public JsonResult Get() => Json(UnitOfWork.Notes.AllNotes);
+    public JsonResult Get()
+    {
+      var notes = Mapper.Map<IEnumerable<Note>, List<NoteViewModel>>
+      (UnitOfWork.Notes.GetNotesByUserId(User.GetLoggedInUserId<Guid>())
+      .OrderByDescending(n => n.DateModified))
+      .OrderByDescending(n => n.PinOrder);
+      return Json(notes);
+    }
 
     // POST api/notes
     [HttpPost]
@@ -25,11 +37,12 @@ namespace ProjectAPI.Controllers
     public JsonResult Post([FromBody] Note model)
     {
       model.UserId = User.GetLoggedInUserId<Guid>();
+      
       if (ModelState.IsValid)
       {
-        UnitOfWork.Notes.Add(model);
+        var result = UnitOfWork.Notes.Add(model);
         UnitOfWork.Save();
-        return Json(model);
+        return Json(result);
       }
       return Json(BadRequest(ModelState));
     }
@@ -37,14 +50,14 @@ namespace ProjectAPI.Controllers
     // GET api/notes/5
     [HttpGet("{id}")]
     [Authorize(Policy = "CanRead")]
-    public JsonResult Get(int id) => Json(UnitOfWork.Notes.GetNoteById(id));
+    public JsonResult Get(int id) => Json(UnitOfWork.Notes.GetNoteById(id, User.GetLoggedInUserId<Guid>()));
 
     // DELETE api/notes/5
     [HttpDelete("{id}")]
     [Authorize(Policy = "CanWrite")]
     public JsonResult Delete(int id)
     {
-      var evnt = UnitOfWork.Notes.GetNoteById(id);
+      var evnt = UnitOfWork.Notes.GetNoteById(id, User.GetLoggedInUserId<Guid>());
       UnitOfWork.Notes.Delete(evnt);
       UnitOfWork.Save();
       return Json(evnt);
@@ -55,9 +68,17 @@ namespace ProjectAPI.Controllers
     [Authorize(Policy = "CanWrite")]
     public JsonResult Put([FromBody] Note model)
     {
+      model.UserId = User.GetLoggedInUserId<Guid>();
       var updated = UnitOfWork.Notes.Update(model);
-      UnitOfWork.Save();
-      return Json(updated);
+      if (updated != null)
+      {
+        UnitOfWork.Save();
+        UnitOfWork.AppDbContext.Entry<Note>(updated).Reload();
+        
+        return Json(Mapper.Map<NoteViewModel>(updated));
+      }
+      Response.StatusCode = StatusCodes.Status400BadRequest;
+      return Json(model);
     }
   }
 }

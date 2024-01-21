@@ -11,6 +11,7 @@ namespace Project.Infra
     public    IContentService  Contents   { get; private set; }
     public    IEventService    Events     { get; private set; }
     public    INoteService     Notes      { get; private set; }
+    public AppDbContext AppDbContext {get; private set; }
 
     public UnitOfWork(
         IContentService  contents,
@@ -21,15 +22,15 @@ namespace Project.Infra
         AppDbContext     _context
         )
     {
-      Context    = _context;
       Categories = categories;
       Folders    = folders;
       Contents   = contents;
       Events     = events;
       Notes      = notes;
+      AppDbContext = _context;
     }
 
-    public int Save()     => Context.SaveChanges();
-    public void Dispose() => Context.Dispose();
+    public int Save()     => AppDbContext.SaveChanges();
+    public void Dispose() => AppDbContext.Dispose();
   }
 }

@@ -11,6 +11,7 @@ namespace Project.Services
     Event Add(Event e);
     Event Update(Event e);
     Event Delete(Event e);
+    IEnumerable<Event> Delete(IEnumerable<Event> events);
     IEnumerable<Event> GetEventsByUserId (Guid userid);
   }
 }

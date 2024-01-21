@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ProjectAPI.Ioc
 {
@@ -25,6 +26,7 @@ namespace ProjectAPI.Ioc
 
       // ASP.NET Authorization Polices
       /* services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); */
+      services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
       services.AddSingleton<IAuthorizationHandler, RoleClaimRequirmentHandler>(); ;
 
       AutoMapper.IConfigurationProvider config = new MapperConfiguration(

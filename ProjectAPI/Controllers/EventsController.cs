@@ -58,6 +58,23 @@ namespace ProjectAPI.Controllers
       return Json(evnt);
     }
 
+    // DELETE api/events/
+    [HttpDelete()]
+    [Authorize(Policy = "CanWrite")]
+    public JsonResult Delete([FromBody] IEnumerable<Event> events)
+    {
+
+      /* var evnts = UnitOfWork.Events.GetEventsById(events, User.GetLoggedInUserId<Guid>()); */
+
+      /* foreach (var e in events) { */
+      /*   e.UserID = User.GetLoggedInUserId<Guid>(); */
+      /* } */
+
+      /* UnitOfWork.Events.Delete(events); */
+      /* UnitOfWork.Save(); */
+      return Json(events);
+    }
+
     // PUT api/events/
     [HttpPut()]
     [Authorize(Policy = "CanWrite")]

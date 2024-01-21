@@ -15,51 +15,55 @@ namespace Project.Data
 
     public T GetById(params object[] id) => Entities.Find(id);
 
-    public void Insert(T entity)
+    public T Insert(T entity)
     {
       if (entity == null)
         throw new ArgumentNullException("entity");
 
-      Entities.Add(entity);
+      return Entities.Add(entity).Entity;
     }
 
-    public void Insert(IEnumerable<T> entities)
+    public IEnumerable<T> Insert(IEnumerable<T> entities)
     {
       if (entities == null)
         throw new ArgumentNullException("entities");
 
-      foreach (var entity in entities)
-        Entities.Add(entity);
+      // foreach (var entity in entities)
+        Entities.AddRange(entities);
+        return entities;
     }
 
-    public void Update(T entity)
+    public T Update(T entity)
     {
       if (entity == null)
         throw new ArgumentNullException("entity");
-      Entities.Update(entity);
+      return Entities.Update(entity).Entity;
     }
 
-    public void Update(IEnumerable<T> entities)
+    public IEnumerable<T> Update(IEnumerable<T> entities)
     {
       if (entities == null)
         throw new ArgumentNullException("entities");
+      Entities.UpdateRange(entities);
+      return entities;
     }
 
-    public void Delete(T entity)
+    public T Delete(T entity)
     {
       if (entity == null)
         throw new ArgumentNullException("entity");
 
-      Entities.Remove(entity);
+      return Entities.Remove(entity).Entity;
     }
 
-    public void Delete(IEnumerable<T> entities)
+    public IEnumerable<T> Delete(IEnumerable<T> entities)
     {
       if (entities == null)
         throw new ArgumentNullException("entities");
 
-      foreach (var entity in entities)
-        Entities.Remove(entity);
+      /* foreach (var entity in entities) */
+      Entities.RemoveRange(entities);
+      return entities;
     }
 
     public IQueryable<T> Table
