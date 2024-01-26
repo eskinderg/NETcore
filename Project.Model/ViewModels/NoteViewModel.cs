@@ -17,6 +17,6 @@ namespace Project.Model.ViewModels
     public DateTime?  PinOrder      { get; set; }
     public DateTime?  DateCreated   { get; set; }
     public DateTime?  DateModified  { get; set; }
-    public DateTime?  ArchivedDate  { get; set; }
+    public DateTime?  DateArchived  { get; set; }
   }
 }
