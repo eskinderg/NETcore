@@ -12,6 +12,7 @@ namespace Project.Model.Models
     public int        Width         { get; set; }
     public int        Left          { get; set; }
     public int        Top           { get; set; }
+    public string     Selection     { get; set; }
     public bool       Archived      { get; set; }
     public bool       Active        { get; set; }
     public DateTime?  PinOrder      { get; set; }
