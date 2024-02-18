@@ -13,8 +13,8 @@ namespace Project.Model.Models
     public int        Left          { get; set; }
     public int        Top           { get; set; }
     public string     Selection     { get; set; }
-    public bool       Archived      { get; set; }
-    public bool       Active        { get; set; }
+    public bool?      Archived      { get; set; }
+    public bool?      Active        { get; set; }
     public DateTime?  PinOrder      { get; set; }
     public DateTime   DateCreated   { get; set; }
     public  DateTime  DateModified  { get;  set; }
