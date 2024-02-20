@@ -15,6 +15,7 @@ namespace Project.Model.Models
     public string     Selection     { get; set; }
     public bool?      Archived      { get; set; }
     public bool?      Active        { get; set; }
+    public bool?      SpellCheck    { get; set; }
     public DateTime?  PinOrder      { get; set; }
     public DateTime   DateCreated   { get; set; }
     public  DateTime  DateModified  { get;  set; }

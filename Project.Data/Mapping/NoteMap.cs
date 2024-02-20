@@ -27,6 +27,7 @@ namespace Project.Data.Mapping
       builder.Property(c => c.Text).HasColumnName("text");
       builder.Property(c => c.Header).HasColumnName("header");
       builder.Property(c => c.Archived).HasColumnName("archived").HasDefaultValueSql("b'0'");
+      builder.Property(c => c.SpellCheck).HasColumnName("spell_check").HasDefaultValueSql("b'0'");
       builder.Property(c => c.DateArchived).HasColumnName("date_archived").HasColumnType("TIMESTAMP").HasDefaultValueSql("NULL");
       builder.Property(c => c.Active).HasColumnName("active").HasDefaultValueSql("b'1'");
       builder.Property(c => c.DateCreated).HasColumnName("date_created").HasDefaultValueSql("CURRENT_TIMESTAMP").ValueGeneratedOnAdd();
