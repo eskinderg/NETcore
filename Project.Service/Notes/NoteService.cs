@@ -10,22 +10,22 @@ namespace Project.Services
   {
     public IRepository<Note> Repository { get; }
 
-    public IEnumerable<Note> AllNotes => Repository.Table.OrderByDescending(n => n.Id);
+    IEnumerable<Note> INoteService.AllNotes => Repository.Table.OrderByDescending(n => n.Id);
 
     public NoteService(IRepository<Note> repository) => Repository = repository;
 
-    public Note Add(Note e) => Repository.Insert(e);
+    Note INoteService.Add(Note e) => Repository.Insert(e);
 
-    public Note Update(Note e) => Repository.Update(e);
+    Note INoteService.Update(Note e) => Repository.Update(e);
 
-    public Note GetNoteById(int id, Guid userId) => Repository.GetById(id , userId);
+    Note INoteService.GetNoteById(int id, Guid userId) => Repository.GetById(id , userId);
 
-    public Note Delete(Note e)
+    Note INoteService.Delete(Note e)
     {
       Repository.Delete(e);
       return e;
     }
-    public IEnumerable<Note> GetNotesByUserId(Guid userid) => Repository.Table.Where(n => n.UserId == userid);
+    IEnumerable<Note> INoteService.GetNotesByUserId(Guid userid) => Repository.Table.Where(n => n.UserId == userid);
 
   }
 }

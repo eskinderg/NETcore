@@ -10,26 +10,26 @@ namespace Project.Services
   public class EventService : IEventService
   {
     public IRepository<Event> Repository { get; }
-    public IEnumerable<Event> AllEvents => Repository.Table.ToList();
+
+    IEnumerable<Event> IEventService.AllEvents => Repository.Table.ToList();
 
     public EventService(IRepository<Event> repository) => Repository = repository;
 
-    public Event Add(Event e) => Repository.Insert(e);
+    Event IEventService.Add(Event e) => Repository.Insert(e);
 
-    public Event Update(Event e) => Repository.Update(e); 
+    Event IEventService.Update(Event e) => Repository.Update(e); 
 
-    public Event GetEventById(int id, Guid userId) => Repository.GetById(id, userId);
+    Event IEventService.GetEventById(int id, Guid userId) => Repository.GetById(id, userId);
 
-    public Event Delete(Event e)
+    Event IEventService.Delete(Event e)
     {
       Repository.Delete(e);
       return e;
     }
 
-    public IEnumerable<Event> Delete(IEnumerable<Event> events) => Repository.Delete(events);
+    IEnumerable<Event> IEventService.Delete(IEnumerable<Event> events) => Repository.Delete(events);
 
-    public IEnumerable<Event> GetEventsByUserId (Guid userid) => Repository.Table.Where(e => e.UserID == userid);
-
+    IEnumerable<Event> IEventService.GetEventsByUserId (Guid userid) => Repository.Table.Where(e => e.UserID == userid);
     }
   }
 

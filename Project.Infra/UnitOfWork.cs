@@ -5,13 +5,13 @@ namespace Project.Infra
 {
   public class UnitOfWork: IUnitOfWork
   {
-    protected AppDbContext     Context    { get; }
-    public    ICategoryService Categories { get; private set; }
-    public    IFolderService   Folders    { get; private set; }
-    public    IContentService  Contents   { get; private set; }
-    public    IEventService    Events     { get; private set; }
-    public    INoteService     Notes      { get; private set; }
-    public AppDbContext AppDbContext {get; private set; }
+    protected AppDbContext     Context      { get; }
+    public    ICategoryService Categories   { get; private set; }
+    public    IFolderService   Folders      { get; private set; }
+    public    IContentService  Contents     { get; private set; }
+    public    IEventService    Events       { get; private set; }
+    public    INoteService     Notes        { get; private set; }
+    public    AppDbContext     AppDbContext { get; private set; }
 
     public UnitOfWork(
         IContentService  contents,
