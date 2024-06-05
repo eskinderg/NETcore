@@ -18,8 +18,8 @@ namespace Project.Model.Models
     public bool?      SpellCheck    { get; set; }
     public DateTime?  PinOrder      { get; set; }
     public DateTime   DateCreated   { get; set; }
-    public  DateTime  DateModified  { get;  set; }
-    public DateTime?  DateArchived  { get;  set; }
+    public  DateTime  DateModified  { get; set; }
+    public DateTime?  DateArchived  { get; set; }
 
   }
 }

@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Project.Model
 {
-  public abstract class BaseEntity
+  public abstract class BaseEntity : IBaseEntity
   {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

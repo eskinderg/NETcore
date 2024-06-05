@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,13 +16,13 @@ namespace Project.Data
     {
       base.OnModelCreating(modelBuilder);
 
-      //Registering dynamically all mappings that implement IEntityTypeConfiguration 
+      //Registering dynamically all mappings that implement IEntityTypeConfiguration
       modelBuilder.ApplyConfigurationsFromAssembly(
           Assembly.GetExecutingAssembly(),
           t => t.GetInterfaces().Any(i =>
             i.IsGenericType &&
             i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>) &&
-            typeof(BaseEntity).IsAssignableFrom(i.GenericTypeArguments[0])));
+            typeof(IBaseEntity).IsAssignableFrom(i.GenericTypeArguments[0])));
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -37,7 +37,7 @@ namespace ProjectAPI.Controllers
     public JsonResult Post([FromBody] Note model)
     {
       model.UserId = User.GetLoggedInUserId<Guid>();
-      
+
       if (ModelState.IsValid)
       {
         var result = UnitOfWork.Notes.Add(model);
@@ -74,7 +74,7 @@ namespace ProjectAPI.Controllers
       {
         UnitOfWork.Save();
         UnitOfWork.AppDbContext.Entry<Note>(updated).Reload();
-        
+
         return Json(Mapper.Map<NoteViewModel>(updated));
       }
       Response.StatusCode = StatusCodes.Status400BadRequest;
