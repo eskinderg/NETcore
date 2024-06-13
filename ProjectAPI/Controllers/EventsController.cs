@@ -19,22 +19,22 @@ namespace ProjectAPI.Controllers
     public EventsController(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
     [HttpGet]
-    [Authorize(Policy = "CanRead")]
+    [Authorize]
     public JsonResult Get()
     {
       var events = Mapper.Map<IEnumerable<Event>, List<EventViewModel>>
-        (UnitOfWork.Events.GetEventsByUserId(User.GetLoggedInUserId<Guid>()));
+        (UnitOfWork.Events.GetEventsByUserId(User.GetLoggedInUserId<string>()));
       return Json(events);
     }
 
     // POST api/events
     [HttpPost]
-    [Authorize(Policy = "CanWrite")]
+    [Authorize]
     public JsonResult Post([FromBody] Event model)
     {
       if (ModelState.IsValid)
       {
-        model.UserID = User.GetLoggedInUserId<Guid>();
+        model.UserID = User.GetLoggedInUserId<string>();
         UnitOfWork.Events.Add(model);
         UnitOfWork.Save();
         return Json(model);
@@ -44,15 +44,15 @@ namespace ProjectAPI.Controllers
 
     // GET api/events/5
     [HttpGet("{id}")]
-    [Authorize(Policy = "CanRead")]
-    public JsonResult Get(int id) => Json(UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<Guid>()));
+    [Authorize]
+    public JsonResult Get(int id) => Json(UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<string>()));
 
     // DELETE api/events/5
     [HttpDelete("{id}")]
     [Authorize(Policy = "CanWrite")]
     public JsonResult Delete(int id)
     {
-      var evnt = UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<Guid>());
+      var evnt = UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<string>());
       UnitOfWork.Events.Delete(evnt);
       UnitOfWork.Save();
       return Json(evnt);
@@ -60,14 +60,14 @@ namespace ProjectAPI.Controllers
 
     // DELETE api/events/
     [HttpDelete()]
-    [Authorize(Policy = "CanWrite")]
+    [Authorize]
     public JsonResult Delete([FromBody] IEnumerable<Event> events)
     {
 
-      /* var evnts = UnitOfWork.Events.GetEventsById(events, User.GetLoggedInUserId<Guid>()); */
+      /* var evnts = UnitOfWork.Events.GetEventsById(events, User.GetLoggedInUserId<string>()); */
 
       /* foreach (var e in events) { */
-      /*   e.UserID = User.GetLoggedInUserId<Guid>(); */
+      /*   e.UserID = User.GetLoggedInUserId<string>(); */
       /* } */
 
       /* UnitOfWork.Events.Delete(events); */
@@ -77,10 +77,10 @@ namespace ProjectAPI.Controllers
 
     // PUT api/events/
     [HttpPut()]
-    [Authorize(Policy = "CanWrite")]
+    [Authorize]
     public JsonResult Put([FromBody] Event model)
     {
-      model.UserID = User.GetLoggedInUserId<Guid>();
+      model.UserID = User.GetLoggedInUserId<string>();
       var updated = UnitOfWork.Events.Update(model);
       if (updated != null)
       {
@@ -92,12 +92,12 @@ namespace ProjectAPI.Controllers
     }
 
     // PUT api/events/
-    [Authorize(Policy = "CanWrite")]
+    [Authorize]
     [HttpPut("Toggle")]
     public JsonResult Toggle([FromBody] Event model)
     {
       model.Complete = !model.Complete;
-      model.UserID = User.GetLoggedInUserId<Guid>();
+      model.UserID = User.GetLoggedInUserId<string>();
       var updated = UnitOfWork.Events.Update(model);
       if (updated != null)
       {

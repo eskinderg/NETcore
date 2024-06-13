@@ -18,14 +18,14 @@ namespace Project.Services
 
     Note INoteService.Update(Note e) => Repository.Update(e);
 
-    Note INoteService.GetNoteById(int id, Guid userId) => Repository.GetById(id , userId);
+    Note INoteService.GetNoteById(int id, string userId) => Repository.GetById(id , userId);
 
     Note INoteService.Delete(Note e)
     {
       Repository.Delete(e);
       return e;
     }
-    IEnumerable<Note> INoteService.GetNotesByUserId(Guid userid) => Repository.Table.Where(n => n.UserId == userid);
+    IEnumerable<Note> INoteService.GetNotesByUserId(string userid) => Repository.Table.Where(n => n.UserId == userid);
 
   }
 }

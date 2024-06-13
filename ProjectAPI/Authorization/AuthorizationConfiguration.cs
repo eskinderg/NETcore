@@ -13,7 +13,7 @@ namespace ProjectAPI.Identity.Authorization
         throw new ArgumentNullException(nameof(services));
       }
 
-      return services.AddAuthorization((Action<AuthorizationOptions>)(o =>
+      return services.AddAuthorization((o =>
                   {
                     // o.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Alice Smith")));
                     // o.AddPolicy("CanWriteCustomerData", policy => policy.Requirements.Add(new MyClaimRequirement("name", "Bob Smith")));

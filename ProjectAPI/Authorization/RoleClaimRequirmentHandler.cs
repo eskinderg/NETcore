@@ -7,6 +7,11 @@ namespace ProjectAPI.Authorization
 {
   public class RoleClaimRequirmentHandler : AuthorizationHandler<RoleClaimRequirement>
   {
+    // public Task HandleAsync(AuthorizationHandlerContext context)
+    // {
+    //   return this.HandleRequirementAsync(context, new RoleClaimRequirement("asdf"));
+    // }
+
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RoleClaimRequirement requirement)
     {
 

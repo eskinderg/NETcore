@@ -17,9 +17,9 @@ namespace Project.Services
 
     Event IEventService.Add(Event e) => Repository.Insert(e);
 
-    Event IEventService.Update(Event e) => Repository.Update(e); 
+    Event IEventService.Update(Event e) => Repository.Update(e);
 
-    Event IEventService.GetEventById(int id, Guid userId) => Repository.GetById(id, userId);
+    Event IEventService.GetEventById(int id, string userId) => Repository.GetById(id, userId);
 
     Event IEventService.Delete(Event e)
     {
@@ -29,7 +29,7 @@ namespace Project.Services
 
     IEnumerable<Event> IEventService.Delete(IEnumerable<Event> events) => Repository.Delete(events);
 
-    IEnumerable<Event> IEventService.GetEventsByUserId (Guid userid) => Repository.Table.Where(e => e.UserID == userid);
+    IEnumerable<Event> IEventService.GetEventsByUserId (string userid) => Repository.Table.Where(e => e.UserID == userid);
     }
   }
 
