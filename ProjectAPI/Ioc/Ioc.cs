@@ -27,6 +27,7 @@ namespace ProjectAPI.Ioc
       /* services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>(); */
       // services.AddTransient<IClaimsTransformation, ClaimsTransformer>();
       services.AddSingleton<IAuthorizationHandler, RoleClaimRequirmentHandler>();
+      services.AddSingleton<IAuthorizationHandler, EmailRoleClaimRequirmentHandler>();
 
       AutoMapper.IConfigurationProvider config = new MapperConfiguration(
           cfg => { cfg.AddMaps(Assembly.GetExecutingAssembly()); }

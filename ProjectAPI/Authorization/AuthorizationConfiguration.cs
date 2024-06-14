@@ -1,5 +1,4 @@
 using System;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ProjectAPI.Identity.Authorization
@@ -23,6 +22,8 @@ namespace ProjectAPI.Identity.Authorization
                     // o.AddPolicy("IsAdmin", policy => policy.Requirements.Add(new RoleClaimRequirement("Admin")));
                     o.AddPolicy("CanWrite", policy => policy.Requirements.Add(new RoleClaimRequirement("Write")));
                     o.AddPolicy("CanRead", policy => policy.Requirements.Add(new RoleClaimRequirement("Read")));
+                    o.AddPolicy("Email", policy => policy.Requirements.Add(new EmailRoleClaimRequirement("eskindergg@gmail.com")));
+                    o.AddPolicy("Email", policy => policy.Requirements.Add(new EmailRoleClaimRequirement("eskrock@yahoo.com")));
                   }));
     }
   }

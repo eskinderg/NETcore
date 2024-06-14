@@ -21,7 +21,7 @@ namespace ProjectAPI.Controllers
 
     // GET api/notes
     [HttpGet]
-    [Authorize]
+    [Authorize (Policy ="Email")]
     public JsonResult Get()
     {
       var notes = Mapper.Map<IEnumerable<Note>, List<NoteViewModel>>
@@ -33,7 +33,8 @@ namespace ProjectAPI.Controllers
 
     // POST api/notes
     [HttpPost]
-    [Authorize(Policy = "CanWrite")]
+    /* [Authorize(Policy = "CanWrite")] */
+    [Authorize (Policy ="Email")]
     public JsonResult Post([FromBody] Note model)
     {
       model.UserId = User.GetLoggedInUserId<string>();
@@ -54,7 +55,8 @@ namespace ProjectAPI.Controllers
 
     // DELETE api/notes/5
     [HttpDelete("{id}")]
-    [Authorize(Policy = "CanWrite")]
+    /* [Authorize(Policy = "CanWrite")] */
+    [Authorize (Policy ="Email")]
     public JsonResult Delete(int id)
     {
       var evnt = UnitOfWork.Notes.GetNoteById(id, User.GetLoggedInUserId<string>());
@@ -65,7 +67,8 @@ namespace ProjectAPI.Controllers
 
     // PUT api/notes/
     [HttpPut]
-    [Authorize]
+    /* [Authorize] */
+    [Authorize (Policy ="Email")]
     public JsonResult Put([FromBody] Note model)
     {
       model.UserId = User.GetLoggedInUserId<string>();

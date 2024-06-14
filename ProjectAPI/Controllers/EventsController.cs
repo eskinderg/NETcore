@@ -49,7 +49,8 @@ namespace ProjectAPI.Controllers
 
     // DELETE api/events/5
     [HttpDelete("{id}")]
-    [Authorize(Policy = "CanWrite")]
+    /* [Authorize(Policy = "CanWrite")] */
+    [Authorize (Policy ="Email")]
     public JsonResult Delete(int id)
     {
       var evnt = UnitOfWork.Events.GetEventById(id, User.GetLoggedInUserId<string>());
