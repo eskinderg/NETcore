@@ -20,6 +20,7 @@ namespace Project.Model.Models
     public DateTime   DateCreated   { get; set; }
     public  DateTime  DateModified  { get; set; }
     public DateTime?  DateArchived  { get; set; }
+    public string     Owner         { get; set; }
 
   }
 }

@@ -20,6 +20,7 @@ namespace Project.Data.Mapping
       builder.Property(c => c.UserId).HasColumnName("user_id");
       builder.Property(c => c.Height).HasColumnName("height");
       builder.Property(c => c.Width).HasColumnName("width");
+      builder.Property(c => c.Owner).HasColumnName("owner");
       builder.Property(c => c.Top).HasColumnName("top");
       builder.Property(c => c.Selection).HasColumnName("selection").HasDefaultValueSql("NULL");
       builder.Property(c => c.Left).HasColumnName("left");
@@ -35,7 +36,7 @@ namespace Project.Data.Mapping
 
       builder.Property<DateTime>(c => c.DateModified).HasColumnName("date_modified");
       builder.Property<DateTime>(c => c.DateModified).HasDefaultValueSql("CURRENT_TIMESTAMP");
-      
+
       //Table & Column Mapping
       builder.ToTable("note_tbl");
     }

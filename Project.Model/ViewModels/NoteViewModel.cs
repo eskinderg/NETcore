@@ -2,7 +2,7 @@ using System;
 
 namespace Project.Model.ViewModels
 {
-  public class NoteViewModel 
+  public class NoteViewModel
   {
     public int        Id            { get; set; }
     public string     Header        { get; set; }
@@ -20,5 +20,6 @@ namespace Project.Model.ViewModels
     public DateTime?  DateCreated   { get; set; }
     public DateTime?  DateModified  { get; set; }
     public DateTime?  DateArchived  { get; set; }
+    public string     Owner         { get; set; }
   }
 }
