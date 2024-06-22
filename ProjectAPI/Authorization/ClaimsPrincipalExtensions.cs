@@ -36,7 +36,7 @@ namespace ProjectAPI.Identity.Authorization
       if (principal == null)
         throw new ArgumentNullException(nameof(principal));
 
-      return principal.FindFirstValue(ClaimTypes.Name);
+      return principal.FindFirstValue(ClaimTypes.GivenName);
     }
 
     public static string GetLoggedInUserEmail(this ClaimsPrincipal principal)

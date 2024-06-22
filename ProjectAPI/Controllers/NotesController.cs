@@ -37,6 +37,7 @@ namespace ProjectAPI.Controllers
     public JsonResult Post([FromBody] Note model)
     {
       model.UserId = User.GetLoggedInUserId<string>();
+      model.Owner = User.GetLoggedInUserName();
 
       if (ModelState.IsValid)
       {
