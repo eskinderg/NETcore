@@ -25,7 +25,7 @@ namespace ProjectAPI.Controllers
     public JsonResult Get()
     {
       var notes = Mapper.Map<IEnumerable<Note>, List<NoteViewModel>>
-      (UnitOfWork.Notes.GetNotesByUserId(User.GetLoggedInUserId<Guid>())
+      (UnitOfWork.Notes.GetNotesByUserId(User.GetLoggedInUserId<string>())
       .OrderByDescending(n => n.DateModified))
       .OrderByDescending(n => n.PinOrder);
       return Json(notes);
@@ -36,7 +36,7 @@ namespace ProjectAPI.Controllers
     [Authorize(Policy = "CanWrite")]
     public JsonResult Post([FromBody] Note model)
     {
-      model.UserId = User.GetLoggedInUserId<Guid>();
+      model.UserId = User.GetLoggedInUserId<string>();
 
       if (ModelState.IsValid)
       {
@@ -50,14 +50,14 @@ namespace ProjectAPI.Controllers
     // GET api/notes/5
     [HttpGet("{id}")]
     [Authorize(Policy = "CanRead")]
-    public JsonResult Get(int id) => Json(UnitOfWork.Notes.GetNoteById(id, User.GetLoggedInUserId<Guid>()));
+    public JsonResult Get(int id) => Json(UnitOfWork.Notes.GetNoteById(id, User.GetLoggedInUserId<string>()));
 
     // DELETE api/notes/5
     [HttpDelete("{id}")]
     [Authorize(Policy = "CanWrite")]
     public JsonResult Delete(int id)
     {
-      var evnt = UnitOfWork.Notes.GetNoteById(id, User.GetLoggedInUserId<Guid>());
+      var evnt = UnitOfWork.Notes.GetNoteById(id, User.GetLoggedInUserId<string>());
       UnitOfWork.Notes.Delete(evnt);
       UnitOfWork.Save();
       return Json(evnt);
@@ -68,7 +68,7 @@ namespace ProjectAPI.Controllers
     [Authorize(Policy = "CanWrite")]
     public JsonResult Put([FromBody] Note model)
     {
-      model.UserId = User.GetLoggedInUserId<Guid>();
+      model.UserId = User.GetLoggedInUserId<string>();
       var updated = UnitOfWork.Notes.Update(model);
       if (updated != null)
       {
