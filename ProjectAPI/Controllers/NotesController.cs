@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Project.Infra;
@@ -26,8 +25,9 @@ namespace ProjectAPI.Controllers
     {
       var notes = Mapper.Map<IEnumerable<Note>, List<NoteViewModel>>
       (UnitOfWork.Notes.GetNotesByUserId(User.GetLoggedInUserId<string>())
-      .OrderByDescending(n => n.DateModified))
-      .OrderByDescending(n => n.PinOrder);
+      .OrderByDescending(n => n.DateModified));
+      /* .OrderByDescending(n => n.DateModified)) */
+      /* .OrderByDescending(n => n.PinOrder); */
       return Json(notes);
     }
 
