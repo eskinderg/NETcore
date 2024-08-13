@@ -31,6 +31,15 @@ namespace ProjectAPI.Controllers
       return Json(notes);
     }
 
+    [HttpGet("archived")]
+    [Authorize(Policy = "CanRead")]
+    public JsonResult archived()
+    {
+      var notes = Mapper.Map<IEnumerable<Note>, List<NoteViewModel>>
+     (UnitOfWork.Notes.GetArchivedNotesByUserId(User.GetLoggedInUserId<string>()));
+      return Json(notes);
+    }
+
     // POST api/notes
     [HttpPost]
     [Authorize(Policy = "CanWrite")]

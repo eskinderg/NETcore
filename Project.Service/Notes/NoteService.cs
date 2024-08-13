@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Project.Model.Models;
 using Project.Data;
 using System.Linq;
-using System;
 
 namespace Project.Services
 {
@@ -26,6 +25,8 @@ namespace Project.Services
       return e;
     }
     IEnumerable<Note> INoteService.GetNotesByUserId(string userid) => Repository.Table.Where(n => n.UserId == userid);
+
+    IEnumerable<Note> INoteService.GetArchivedNotesByUserId(string userid) => Repository.Table.Where(n => n.UserId == userid).Where(n => (bool)n.Archived).OrderByDescending(nt => nt.DateArchived);
 
   }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Project.Model.Models;
 
@@ -12,5 +11,6 @@ namespace Project.Services
     Note Update(Note e);
     Note Delete(Note e);
     IEnumerable<Note> GetNotesByUserId (string userid);
+    IEnumerable<Note> GetArchivedNotesByUserId (string userid);
   }
 }
