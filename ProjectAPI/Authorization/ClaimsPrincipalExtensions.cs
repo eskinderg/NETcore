@@ -1,5 +1,6 @@
 using System;
 using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ProjectAPI.Identity.Authorization
 {
@@ -37,6 +38,13 @@ namespace ProjectAPI.Identity.Authorization
         throw new ArgumentNullException(nameof(principal));
 
       return principal.FindFirstValue(ClaimTypes.GivenName);
+    }
+
+    public static string GetUsersDevice(this ClaimsPrincipal principal){
+      if (principal == null)
+        throw new ArgumentNullException(nameof(principal));
+        return principal.FindFirstValue(JwtRegisteredClaimNames.Azp);
+
     }
 
     public static string GetLoggedInUserEmail(this ClaimsPrincipal principal)

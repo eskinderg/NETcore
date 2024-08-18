@@ -14,6 +14,7 @@ namespace Project.Model.ViewModels
     public int        Top           { get; set; }
     public string     Selection     { get; set; }
     public bool       Archived      { get; set; }
+    public bool       Favorite      { get; set; }
     public bool       SpellCheck    { get; set; }
     public bool       Active        { get; set; }
     public DateTime?  PinOrder      { get; set; }

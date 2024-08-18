@@ -1,9 +1,6 @@
-/* using System; */
 using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MySql.EntityFrameworkCore.Metadata;
 using Project.Model.Models;
 
 namespace Project.Data.Mapping
@@ -28,6 +25,7 @@ namespace Project.Data.Mapping
       builder.Property(c => c.Text).HasColumnName("text");
       builder.Property(c => c.Header).HasColumnName("header");
       builder.Property(c => c.Archived).HasColumnName("archived").HasDefaultValueSql("b'0'");
+      builder.Property(c => c.Favorite).HasColumnName("favorite").HasDefaultValueSql("b'0'");
       builder.Property(c => c.SpellCheck).HasColumnName("spell_check").HasDefaultValueSql("b'0'");
       builder.Property(c => c.DateArchived).HasColumnName("date_archived").HasColumnType("TIMESTAMP").HasDefaultValueSql("NULL");
       builder.Property(c => c.Active).HasColumnName("active").HasDefaultValueSql("b'1'");
