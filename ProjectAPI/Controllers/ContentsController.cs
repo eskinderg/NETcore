@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-/* using Project.Services; */
 using Project.Model.Models;
 using AutoMapper;
 using Project.Model.ViewModels;
 using Project.Infra;
 /* using System.Security.Claims; */
 using Microsoft.Extensions.Options;
+using System;
 
 namespace ProjectAPI.Controllers
 {
@@ -41,7 +40,7 @@ namespace ProjectAPI.Controllers
 
     // GET api/Content/5
     [HttpGet("{id}")]
-    public JsonResult Get(int id) => Json(UnitOfWork.Contents.GetContent(id));
+    public JsonResult Get(Guid id) => Json(UnitOfWork.Contents.GetContent(id));
 
     // POST api/contents
     [HttpPost]

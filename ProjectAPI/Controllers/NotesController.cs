@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using Project.Model.ViewModels;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 
 namespace ProjectAPI.Controllers
 {
@@ -28,6 +30,11 @@ namespace ProjectAPI.Controllers
       .OrderByDescending(n => n.DateModified));
       /* .OrderByDescending(n => n.DateModified)) */
       /* .OrderByDescending(n => n.PinOrder); */
+      /* if(User.GetUsersDevice == "Android") { */
+      /*   foreach (var n in notes) { */
+      /*     n.UserId */
+      /*   } */
+      /* } */
       return Json(notes);
     }
 
@@ -57,6 +64,16 @@ namespace ProjectAPI.Controllers
       return Json(BadRequest(ModelState));
     }
 
+    [HttpPost("insert")]
+    [Authorize(Policy = "CanWrite")]
+    public JsonResult Insert([FromBody] IEnumerable<Note> notes)
+    {
+      foreach (var n in notes) {
+        this.Post(n);
+      }
+      return Json(notes);
+    }
+
     // GET api/notes/5
     [HttpGet("{id}")]
     [Authorize(Policy = "CanRead")]
@@ -79,16 +96,49 @@ namespace ProjectAPI.Controllers
     public JsonResult Put([FromBody] Note model)
     {
       model.UserId = User.GetLoggedInUserId<string>();
+      model.Owner = User.GetLoggedInUserName();
       var updated = UnitOfWork.Notes.Update(model);
       if (updated != null)
       {
-        UnitOfWork.Save();
-        UnitOfWork.AppDbContext.Entry<Note>(updated).Reload();
+        try {
+          UnitOfWork.Save();
+          UnitOfWork.AppDbContext.Entry<Note>(updated).Reload();
+        }catch(DbUpdateException ex) when (((MySqlException)ex.InnerException).Number == 12121) {
+          System.Console.WriteLine("Sync failed");
+          Response.StatusCode = StatusCodes.Status409Conflict;
+          return Json(model);
+        }
 
         return Json(Mapper.Map<NoteViewModel>(updated));
       }
       Response.StatusCode = StatusCodes.Status400BadRequest;
       return Json(model);
+    }
+
+    [HttpPut("update")]
+    [Authorize(Policy = "CanWrite")]
+    public JsonResult Update([FromBody] IEnumerable<Note> notes)
+    {
+      try {
+
+        foreach (var n in notes) {
+          n.UserId = User.GetLoggedInUserId<string>();
+          n.Owner = User.GetLoggedInUserName();
+          var updated = UnitOfWork.Notes.Update(n);
+
+          if (updated != null) {
+            UnitOfWork.Save();
+            UnitOfWork.AppDbContext.Entry<Note>(updated).Reload();
+
+          }
+        }
+      }catch(DbUpdateException ex) when (((MySqlException)ex.InnerException).Number == 12121) {
+          System.Console.WriteLine("Sync failed");
+          Response.StatusCode = StatusCodes.Status409Conflict;
+          return Json(notes);
+      }
+
+      return Json(notes);
     }
   }
 }

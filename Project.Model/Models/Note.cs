@@ -8,12 +8,13 @@ namespace Project.Model.Models
     public virtual    string UserId { get; set; }
     public string     Text          { get; set; }
     public string     Colour        { get; set; }
-    public int        Height        { get; set; }
-    public int        Width         { get; set; }
-    public int        Left          { get; set; }
-    public int        Top           { get; set; }
+    public int?       Height        { get; set; }
+    public int?       Width         { get; set; }
+    public int?       Left          { get; set; }
+    public int?       Top           { get; set; }
     public string     Selection     { get; set; }
     public bool?      Archived      { get; set; }
+    public bool?      Pinned        { get; set; }
     public bool?      Favorite      { get; set; }
     public bool?      Active        { get; set; }
     public bool?      SpellCheck    { get; set; }
@@ -21,6 +22,7 @@ namespace Project.Model.Models
     public DateTime   DateCreated   { get; set; }
     public  DateTime  DateModified  { get; set; }
     public DateTime?  DateArchived  { get; set; }
+    public DateTime?  DateSync      { get; set; }
     public string     Owner         { get; set; }
 
   }

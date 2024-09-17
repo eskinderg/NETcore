@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Project.Model.Models;
 using Project.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Project.Services
 {
@@ -14,7 +15,7 @@ namespace Project.Services
 
     public IEnumerable<Content> AllContents => Repository.Table.Include(c => c.Folder);
 
-    public Content GetContent(int id) => Repository.Table.Where(c => c.Id == id).
+    public Content GetContent(Guid id) => Repository.Table.Where(c => c.Id == id).
       Include(c => c.Folder).FirstOrDefault();
 
     public Content AddContent(Content content)

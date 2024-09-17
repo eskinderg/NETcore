@@ -4,7 +4,8 @@ namespace Project.Model.ViewModels
 {
   public class NoteViewModel
   {
-    public int        Id            { get; set; }
+    public Guid       Id            { get; set; }
+    public String     UserId        { get; set; }
     public string     Header        { get; set; }
     public string     Text          { get; set; }
     public string     Colour        { get; set; }
@@ -14,6 +15,7 @@ namespace Project.Model.ViewModels
     public int        Top           { get; set; }
     public string     Selection     { get; set; }
     public bool       Archived      { get; set; }
+    public bool       Pinned        { get; set; }
     public bool       Favorite      { get; set; }
     public bool       SpellCheck    { get; set; }
     public bool       Active        { get; set; }
@@ -21,6 +23,7 @@ namespace Project.Model.ViewModels
     public DateTime?  DateCreated   { get; set; }
     public DateTime?  DateModified  { get; set; }
     public DateTime?  DateArchived  { get; set; }
+    public DateTime?  DateSync      { get; set; }
     public string     Owner         { get; set; }
   }
 }

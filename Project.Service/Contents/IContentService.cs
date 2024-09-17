@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Project.Model.Models;
 
 namespace Project.Services
@@ -7,7 +8,7 @@ namespace Project.Services
   {
     IEnumerable<Content> AllContents { get; }
 
-    Content GetContent(int id);
+    Content GetContent(Guid id);
 
     Content AddContent(Content content);
   }

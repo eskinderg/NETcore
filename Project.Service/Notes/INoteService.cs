@@ -9,6 +9,7 @@ namespace Project.Services
     Note GetNoteById(int id, string userid);
     Note Add(Note e);
     Note Update(Note e);
+    IEnumerable<Note> Update(IEnumerable<Note> notes);
     Note Delete(Note e);
     IEnumerable<Note> GetNotesByUserId (string userid);
     IEnumerable<Note> GetArchivedNotesByUserId (string userid);

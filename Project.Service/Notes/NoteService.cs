@@ -24,9 +24,17 @@ namespace Project.Services
       Repository.Delete(e);
       return e;
     }
-    IEnumerable<Note> INoteService.GetNotesByUserId(string userid) => Repository.Table.Where(n => n.UserId == userid);
+    IEnumerable<Note> INoteService.GetNotesByUserId(string userid) => Repository.Table
+      .Where(n => n.UserId == userid);
 
-    IEnumerable<Note> INoteService.GetArchivedNotesByUserId(string userid) => Repository.Table.Where(n => n.UserId == userid).Where(n => (bool)n.Archived).OrderByDescending(nt => nt.DateArchived);
+    IEnumerable<Note> INoteService.GetArchivedNotesByUserId(string userid) => Repository.Table
+      .Where(n => n.UserId == userid)
+      .Where(n => (bool)n.Archived).OrderByDescending(nt => nt.DateArchived);
 
+    public IEnumerable<Note> Update(IEnumerable<Note> notes)
+    {
+      Repository.Update(notes);
+      return notes;
+    }
   }
 }

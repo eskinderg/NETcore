@@ -2,11 +2,13 @@
 /* using System.Collections.Generic; */
 //using System.Runtime.Serialization;
 
+using System;
+
 namespace Project.Model.ViewModels
 {
   public class EventViewModel
   {
-    public int    Id       { get; set; }
+    public Guid   Id       { get; set; }
     public string Title    { get; set; }
     public bool   Complete { get; set; }
 

@@ -1,4 +1,6 @@
-﻿namespace Project.Model.Models
+using System;
+
+namespace Project.Model.Models
 {
   public class Content : BaseEntity
   {
@@ -6,7 +8,7 @@
     public string  Html          { get; set; }
     public string  Summary       { get; set; }
     public int     XmlConfigId   { get; set; }
-    public int     FolderId      { get; set; }
+    public Guid     FolderId      { get; set; }
     public virtual Folder Folder { get; set; }
   }
 }
