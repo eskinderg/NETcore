@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using MySql.Data.MySqlClient;
 using Project.Data;
 using Project.Services;
 
@@ -30,7 +32,16 @@ namespace Project.Infra
       AppDbContext = _context;
     }
 
-    public int Save()     => AppDbContext.SaveChanges();
+    public int Save() {
+      try {
+        return AppDbContext.SaveChanges();
+      }catch(DbUpdateException ex) when (((MySqlException)ex.InnerException).Number == 12121) {
+        throw new DbUpdateConflictException(((MySqlException)ex.InnerException).Message);
+      } catch(DbUpdateException ex) when (((MySqlException)ex.InnerException).Number == 13131) {
+        throw new NoteNotFoundException(((MySqlException)ex.InnerException).Message);
+      }
+    }
+
     public void Dispose() => AppDbContext.Dispose();
   }
 }

@@ -68,7 +68,8 @@ namespace ProjectAPI.Controllers
     [Authorize(Policy = "CanWrite")]
     public JsonResult Insert([FromBody] IEnumerable<Note> notes)
     {
-      foreach (var n in notes) {
+      foreach (var n in notes)
+      {
         this.Post(n);
       }
       return Json(notes);
@@ -100,12 +101,19 @@ namespace ProjectAPI.Controllers
       var updated = UnitOfWork.Notes.Update(model);
       if (updated != null)
       {
-        try {
+        try
+        {
           UnitOfWork.Save();
           UnitOfWork.AppDbContext.Entry<Note>(updated).Reload();
-        }catch(DbUpdateException ex) when (((MySqlException)ex.InnerException).Number == 12121) {
-          System.Console.WriteLine("Sync failed");
+        }
+        catch (DbUpdateConflictException ex)
+        {
           Response.StatusCode = StatusCodes.Status409Conflict;
+          return Json(model);
+        }
+        catch (NoteNotFoundException ex)
+        {
+          Response.StatusCode = StatusCodes.Status404NotFound;
           return Json(model);
         }
 
@@ -119,23 +127,28 @@ namespace ProjectAPI.Controllers
     [Authorize(Policy = "CanWrite")]
     public JsonResult Update([FromBody] IEnumerable<Note> notes)
     {
-      try {
+      try
+      {
 
-        foreach (var n in notes) {
+        foreach (var n in notes)
+        {
           n.UserId = User.GetLoggedInUserId<string>();
           n.Owner = User.GetLoggedInUserName();
           var updated = UnitOfWork.Notes.Update(n);
 
-          if (updated != null) {
+          if (updated != null)
+          {
             UnitOfWork.Save();
             UnitOfWork.AppDbContext.Entry<Note>(updated).Reload();
 
           }
         }
-      }catch(DbUpdateException ex) when (((MySqlException)ex.InnerException).Number == 12121) {
-          System.Console.WriteLine("Sync failed");
-          Response.StatusCode = StatusCodes.Status409Conflict;
-          return Json(notes);
+      }
+      catch (DbUpdateException ex) when (((MySqlException)ex.InnerException).Number == 12121)
+      {
+        System.Console.WriteLine("Sync failed");
+        Response.StatusCode = StatusCodes.Status409Conflict;
+        return Json(notes);
       }
 
       return Json(notes);
